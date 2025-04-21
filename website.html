@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Dayet | Invoker-Themed Portfolio</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <!-- Bootstrap CSS v5.3.2 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+
+        <!-- Google Fonts: Cinzel and Lora -->
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+
+        <style>
+            body {
+                font-family: 'Lora', serif;
+                background-color: #0d1a26; /* Deep blue-black from Invoker's cloak */
+                color: #b8d4e3; /* Light arcane blue for text */
+            }
+
+            .navbar {
+                background: linear-gradient(to bottom, rgba(13, 26, 38, 0.95), rgba(13, 26, 38, 0.8));
+                backdrop-filter: blur(12px);
+                border-bottom: 1px solid #2a5a7a;
+                transition: background-color 0.3s ease;
+            }
+
+            .navbar-brand {
+                font-family: 'Cinzel', serif;
+                font-size: 2.2rem;
+                font-weight: bold;
+                color: #4cc9f0; /* Bright cyan from Invoker's Quas orb */
+                text-shadow: 0 0 8px rgba(76, 201, 240, 0.5);
+            }
+
+            .navbar-brand:hover {
+                color: #72d6f5;
+            }
+
+            .nav-link {
+                font-family: 'Lora', serif;
+                font-size: 1.1rem;
+                color: #b8d4e3 !important;
+                margin: 0 15px;
+                position: relative;
+            }
+
+            .nav-link:hover {
+                color: #4cc9f0 !important;
+            }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -2px;
+                left: 0;
+                background-color: #4cc9f0;
+                transition: width 0.3s;
+            }
+
+            .nav-link:hover::after {
+                width: 100%;
+            }
+
+            section {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 80px 20px;
+                position: relative;
+                opacity: 0;
+                transform: translateY(20px);
+                animation: fadeInUp 1s ease forwards;
+            }
+
+            @keyframes fadeInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .section-background {
+                background: radial-gradient(circle at center, #1e334a 0%, #0d1a26 100%);
+            }
+
+            .hero-section {
+                overflow: hidden;
+            }
+
+            .image-container {
+                padding: 20px;
+            }
+
+            .content-container {
+                padding: 20px;
+                background: rgba(30, 51, 74, 0.3);
+                border-radius: 12px;
+                border: 1px solid #2a5a7a;
+                box-shadow: 0 0 15px rgba(76, 201, 240, 0.2);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .content-container:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 0 20px rgba(76, 201, 240, 0.4);
+            }
+
+            .hero-img {
+                width: 100%;
+                max-width: 400px;
+                height: auto;
+                aspect-ratio: 1 / 1;
+                object-fit: cover;
+                border: 8px solid #2a5a7a;
+                border-radius: 50%;
+                box-shadow: 0 0 30px rgba(76, 201, 240, 0.5), inset 0 0 12px rgba(76, 201, 240, 0.3);
+                transition: transform 0.3s;
+            }
+
+            .hero-img:hover {
+                transform: scale(1.05);
+            }
+
+            .hero-title {
+                font-family: 'Cinzel', serif;
+                font-size: 3.8rem;
+                font-weight: bold;
+                color: #4cc9f0;
+                text-shadow: 0 0 15px rgba(76, 201, 240, 0.7), 0 0 5px rgba(76, 201, 240, 0.5);
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.3rem;
+                color: #89a7c3;
+                max-width: 500px;
+                line-height: 1.6;
+            }
+
+            .btn-primary {
+                background: linear-gradient(45deg, #4cc9f0, #3ba5d1);
+                border: none;
+                font-family: 'Cinzel', serif;
+                padding: 12px 35px;
+                font-size: 1.1rem;
+                text-shadow: 0 0 5px rgba(76, 201, 240, 0.5);
+                box-shadow: 0 0 10px rgba(76, 201, 240, 0.3);
+            }
+
+            .btn-primary:hover {
+                background: linear-gradient(45deg, #72d6f5, #5cb8e3);
+                box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
+            }
+
+            .section-title {
+                font-family: 'Cinzel', serif;
+                font-size: 2.7rem;
+                color: #4cc9f0;
+                margin-bottom: 30px;
+                text-shadow: 0 0 10px rgba(76, 201, 240, 0.4);
+            }
+
+            .section-content {
+                background: rgba(30, 51, 74, 0.3);
+                border-radius: 12px;
+                border: 1px solid #2a5a7a;
+                box-shadow: 0 0 15px rgba(76, 201, 240, 0.2);
+                padding: 40px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .section-content:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 0 20px rgba(76, 201, 240, 0.4);
+            }
+
+            .skill-bar {
+                background-color: #2a5a7a;
+                height: 12px;
+                border-radius: 6px;
+                overflow: hidden;
+                margin-bottom: 15px;
+                box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+            }
+
+            .skill-progress {
+                background: linear-gradient(90deg, #4cc9f0, #3ba5d1);
+                height: 100%;
+                transition: width 1.5s ease-in-out;
+                box-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+            }
+
+            .form-control {
+                background-color: #1e334a;
+                border: 1px solid #2a5a7a;
+                color: #b8d4e3;
+                font-family: 'Lora', serif;
+                border-radius: 8px;
+                transition: all 0.3s;
+            }
+
+            .form-control:focus {
+                background-color: #1e334a;
+                border-color: #4cc9f0;
+                color: #b8d4e3;
+                box-shadow: 0 0 10px rgba(76, 201, 240, 0.4);
+            }
+
+            footer {
+                background: linear-gradient(to top, #0d1a26, #1e334a);
+                color: #89a7c3;
+                padding: 20px 0;
+                font-family: 'Lora', serif;
+                border-top: 1px solid #2a5a7a;
+            }
+
+            .invoker-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0.1;
+                background: url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') no-repeat center/cover;
+                z-index: 0;
+                filter: brightness(0.8);
+            }
+
+            .skills-section h3 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .skills-section .row > div {
+                margin-bottom: 1rem;
+            }
+
+            .skills-section i {
+                font-size: 2rem;
+                color: #4cc9f0;
+                margin-bottom: 0.5rem;
+            }
+
+            .card {
+                background-color: #1e334a;
+                color: #b8d4e3;
+                border: 1px solid #2a5a7a;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .card:hover {
+                transform: scale(1.05);
+                box-shadow: 0 0 20px rgba(76, 201, 240, 0.5);
+            }
+
+            .card-img-top {
+                object-fit: cover;
+                height: 200px;
+            }
+
+            @media (max-width: 767px) {
+                .hero-img {
+                    margin-bottom: 40px;
+                }
+                .hero-section {
+                    min-height: auto;
+                    padding: 80px 20px;
+                }
+                .hero-title {
+                    font-size: 2.5rem;
+                }
+                .hero-subtitle {
+                    font-size: 1.1rem;
+                    max-width: 100%;
+                }
+                .ms-md-6 {
+                    margin-left: 0 !important;
+                }
+                .image-container, .content-container {
+                    padding: 10px;
+                }
+                .skills-section .col-4 {
+                    flex: 0 0 100%;
+                    max-width: 100%;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#home">Dayet</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#education">Education</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#skills">Skills</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#hobbies">Hobbies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Home Section -->
+        <section id="home" class="hero-section section-background">
+            <div class="invoker-bg"></div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center">
+                        <div class="image-container">
+                            <img src="./images/dayetpogi.jpg" class="rounded-circle hero-img mx-auto d-block" alt="Kristian Diether Alcantara" onerror="this.src='https://placehold.co/400x400?text=Profile+Image'">
+                        </div>
+                    </div>
+                    <div class="col-md-6 ms-md-6 text-center text-md-start">
+                        <div class="content-container">
+                            <h1 class="hero-title">Kristian Diether Alcantara</h1>
+                            <p class="hero-subtitle">
+                                I am Dayet, a 19-year-old IT student at National University Lipa. Like Invoker, I weave code with precision and passion to create arcane solutions in the tech world.
+                            </p>
+                            <div class="skills-section mt-4">
+                                <h3 class="section-title">Key Skills</h3>
+                                <div class="row">
+                                    <div class="col-4 text-center">
+                                        <i class="bi bi-code-slash"></i>
+                                        <p>C++, Java, SQL</p>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <i class="bi bi-braces"></i>
+                                        <p>HTML, CSS, Bootstrap</p>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <i class="bi bi-terminal"></i>
+                                        <p>IT Student, Problem Solver</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#contact" class="btn btn-primary mt-4">Let's Work Together</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="section-background">
+            <div class="invoker-bg"></div>
+            <div class="container">
+                <h2 class="section-title text-center">Education</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <img src="https://placehold.co/400x300?text=Elementary+School" class="card-img-top" alt="Elementary School">
+                            <div class="card-body">
+                                <h5 class="card-title">Elementary</h5>
+                                <p class="card-text">Gaudencio B. Lontok Memorial Integrated School, Lipa, Batangas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <img src="https://placehold.co/400x300?text=High+School" class="card-img-top" alt="High School">
+                            <div class="card-body">
+                                <h5 class="card-title">High School</h5>
+                                <p class="card-text">Gaudencio B. Lontok Memorial Integrated School, Lipa, Batangas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <img src="https://placehold.co/400x300?text=Senior+High+School" class="card-img-top" alt="Senior High School">
+                            <div class="card-body">
+                                <h5 class="card-title">Senior High School</h5>
+                                <p class="card-text">Plaridel Integrated School, Laguna</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <img src="./images/nulipa.jpg" class="card-img-top" alt="College">
+                            <div class="card-body">
+                                <h5 class="card-title">College</h5>
+                                <p class="card-text">National University Lipa, BS Information Technology (2nd Year)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section-background">
+            <div class="invoker-bg"></div>
+            <div class="container">
+                <div class="section-content">
+                    <h2 class="section-title text-center">Skills & Tech Stack</h2>
+                    <div class="skill">
+                        <p>C++: 70%</p>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 70%;"></div></div>
+                    </div>
+                    <div class="skill">
+                        <p>Java: 80%</p>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 80%;"></div></div>
+                    </div>
+                    <div class="skill">
+                        <p>SQL: 60%</p>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 60%;"></div></div>
+                    </div>
+                    <div class="skill">
+                        <p>HTML, Bootstrap, CSS: 80%</p>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 80%;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hobbies Section -->
+        <section id="hobbies" class="section-background">
+            <div class="invoker-bg"></div>
+            <div class="container">
+                <h2 class="section-title text-center">Hobbies</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://placehold.co/400x300?text=Dota+2" class="card-img-top" alt="Dota 2">
+                            <div class="card-body">
+                                <h5 class="card-title">Playing Dota 2</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://placehold.co/400x300?text=Valorant" class="card-img-top" alt="Valorant">
+                            <div class="card-body">
+                                <h5 class="card-title">Playing Valorant</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://placehold.co/400x300?text=Mobile+Legends" class="card-img-top" alt="Mobile Legends">
+                            <div class="card-body">
+                                <h5 class="card-title">Playing Mobile Legends</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://placehold.co/400x300?text=Cooking" class="card-img-top" alt="Cooking">
+                            <div class="card-body">
+                                <h5 class="card-title">Cooking</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://placehold.co/400x300?text=Gym" class="card-img-top" alt="Gym">
+                            <div class="card-body">
+                                <h5 class="card-title">Going to the Gym</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://placehold.co/400x300?text=Coffee" class="card-img-top" alt="Coffee">
+                            <div class="card-body">
+                                <h5 class="card-title">Drinking Coffee</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://placehold.co/400x300?text=Cats" class="card-img-top" alt="Cats">
+                            <div class="card-body">
+                                <h5 class="card-title">Spending Time with My Cats</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section-background">
+            <div class="invoker-bg"></div>
+            <div class="container">
+                <div class="section-content text-center">
+                    <h2 class="section-title">Get in Touch</h2>
+                    <p class="mb-4">Ready to conjure some tech magic together? Send me a message!</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="name" placeholder="Your Name" required />
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" id="email" placeholder="Your Email" required />
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="message" rows="5" placeholder="Your Message" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Invoke Message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center">
+            <p class="mb-0">© 2025 Kristian Diether Alcantara. Forged in the arcane fires of code and Dota 2.</p>
+        </footer>
+
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+        <!-- Bootstrap JavaScript Libraries -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>
