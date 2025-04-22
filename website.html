@@ -1,60 +1,101 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>Dayet | Invoker-Themed Portfolio</title>
-        <!-- Required meta tags -->
+        <title>Dayet | Portfolio</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-        <!-- Bootstrap CSS v5.3.2 -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
-
-        <!-- Google Fonts: Cinzel and Lora -->
-        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
-
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
         <style>
+            
+            html {
+                scroll-behavior: smooth;
+            }
             body {
                 font-family: 'Lora', serif;
-                background-color: #0d1a26; /* Deep blue-black from Invoker's cloak */
-                color: #b8d4e3; /* Light arcane blue for text */
+                color: #b8d4e3;
+                margin: 0;
+                overflow-x: hidden;
+                background: none;
+                position: relative;
+                font-size: 1.2rem;
+                font-weight: 500;
+                line-height: 1.8;
             }
-
+            .background-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('./images/invoker.png') no-repeat center/cover;
+                background-size: cover;
+                image-rendering: auto;
+                z-index: -3;
+                opacity: 1;
+                animation: backgroundPulse 20s ease-in-out infinite;
+            }
+            @keyframes backgroundPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+            }
+            .background-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(13, 26, 38, 0.2);
+                z-index: -2;
+            }
+            #invoker-canvas {
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+            }
             .navbar {
                 background: linear-gradient(to bottom, rgba(13, 26, 38, 0.95), rgba(13, 26, 38, 0.8));
-                backdrop-filter: blur(12px);
-                border-bottom: 1px solid #2a5a7a;
+                border-bottom: 2px solid #4cc9f0;
                 transition: background-color 0.3s ease;
+                z-index: 1000;
+                position: fixed;
+                width: 100%;
             }
-
             .navbar-brand {
                 font-family: 'Cinzel', serif;
-                font-size: 2.2rem;
-                font-weight: bold;
-                color: #4cc9f0; /* Bright cyan from Invoker's Quas orb */
-                text-shadow: 0 0 8px rgba(76, 201, 240, 0.5);
+                font-size: 2.8rem;
+                font-weight: 700;
+                color: #4cc9f0;
+                text-shadow: 0 0 8px rgba(76, 201, 240, 0.7);
+                letter-spacing: 0.5px;
+                padding-left: 10px;
             }
-
             .navbar-brand:hover {
                 color: #72d6f5;
+                text-shadow: 0 0 12px rgba(76, 201, 240, 0.9);
             }
-
             .nav-link {
                 font-family: 'Lora', serif;
-                font-size: 1.1rem;
+                font-size: 1.3rem;
+                font-weight: 600;
                 color: #b8d4e3 !important;
                 margin: 0 15px;
                 position: relative;
+                letter-spacing: 0.5px;
             }
-
             .nav-link:hover {
                 color: #4cc9f0 !important;
+                text-shadow: 0 0 5px rgba(76, 201, 240, 0.5);
             }
-
             .nav-link::after {
                 content: '';
                 position: absolute;
@@ -65,11 +106,9 @@
                 background-color: #4cc9f0;
                 transition: width 0.3s;
             }
-
             .nav-link:hover::after {
                 width: 100%;
             }
-
             section {
                 min-height: 100vh;
                 display: flex;
@@ -78,312 +117,462 @@
                 padding: 80px 20px;
                 position: relative;
                 opacity: 0;
-                transform: translateY(20px);
-                animation: fadeInUp 1s ease forwards;
+                transform: translateY(50px);
+                transition: opacity 0.8s ease, transform 0.8s ease;
+                background: none;
+                z-index: 10;
             }
-
-            @keyframes fadeInUp {
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+            section.visible {
+                opacity: 1;
+                transform: translateY(0);
             }
-
-            .section-background {
-                background: radial-gradient(circle at center, #1e334a 0%, #0d1a26 100%);
+            section.force-visible {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
             }
-
             .hero-section {
-                overflow: hidden;
+                z-index: 15;
             }
-
-            .image-container {
-                padding: 20px;
-            }
-
             .content-container {
-                padding: 20px;
-                background: rgba(30, 51, 74, 0.3);
-                border-radius: 12px;
-                border: 1px solid #2a5a7a;
-                box-shadow: 0 0 15px rgba(76, 201, 240, 0.2);
+                padding: 30px;
+                background: linear-gradient(135deg, rgba(26, 43, 60, 0.9), rgba(60, 80, 100, 0.85));
+                border: 2px solid #4cc9f0;
+                outline: 1px solid #b14cff;
+                outline-offset: 2px;
+                border-radius: 8px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 20px rgba(76, 201, 240, 0.5);
+                clip-path: polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%);
+                perspective: 1000px;
+                transform: rotateX(5deg) rotateY(5deg);
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
+                z-index: 20;
+                max-width: 90%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                overflow: visible;
+                backdrop-filter: blur(5px);
+                /* border: 2px solid red; /* Debugging: Remove after confirming */
             }
-
             .content-container:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 0 20px rgba(76, 201, 240, 0.4);
+                transform: scale(1.05) rotateX(0deg) rotateY(0deg);
+                box-shadow: 0 0 30px rgba(76, 201, 240, 0.8);
+                animation: neonPulse 1s ease-in-out;
             }
-
+            @keyframes neonPulse {
+                0%, 100% { box-shadow: 0 0 20px rgba(76, 201, 240, 0.5); }
+                50% { box-shadow: 0 0 40px rgba(76, 201, 240, 1); }
+            }
             .hero-img {
                 width: 100%;
-                max-width: 400px;
-                height: auto;
-                aspect-ratio: 1 / 1;
-                object-fit: cover;
-                border: 8px solid #2a5a7a;
-                border-radius: 50%;
-                box-shadow: 0 0 30px rgba(76, 201, 240, 0.5), inset 0 0 12px rgba(76, 201, 240, 0.3);
-                transition: transform 0.3s;
+                max-width: 500px;
+                height: 500px;
+                object-fit: contain;
+                border: 4px solid #b14cff;
+                border-radius: 8px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+                transition: transform 0.3s, box-shadow 0.3s;
+                margin-right: 20px;
+                z-index: 21;
             }
-
             .hero-img:hover {
-                transform: scale(1.05);
+                transform: scale(1.1) rotate(2deg);
+                box-shadow: 0 0 30px rgba(177, 76, 255, 0.7);
+                animation: imageGlow 1s ease-in-out;
             }
-
+            @keyframes imageGlow {
+                0%, 100% { box-shadow: 0 0 20px rgba(177, 76, 255, 0.5); }
+                50% { box-shadow: 0 0 40px rgba(177, 76, 255, 1); }
+            }
+            .hero-content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
             .hero-title {
                 font-family: 'Cinzel', serif;
-                font-size: 3.8rem;
-                font-weight: bold;
+                font-size: 4.5rem;
+                font-weight: 700;
                 color: #4cc9f0;
-                text-shadow: 0 0 15px rgba(76, 201, 240, 0.7), 0 0 5px rgba(76, 201, 240, 0.5);
+                text-shadow: 0 0 15px rgba(76, 201, 240, 0.7);
                 margin-bottom: 1.5rem;
+                letter-spacing: 0.5px;
             }
-
             .hero-subtitle {
-                font-size: 1.3rem;
-                color: #89a7c3;
-                max-width: 500px;
-                line-height: 1.6;
+                font-family: 'Lora', serif;
+                font-size: 1.5rem;
+                font-weight: 500;
+                color: #b8d4e3;
+                line-height: 1.8;
+                margin-bottom: 1.5rem;
+                letter-spacing: 0.5px;
             }
-
             .btn-primary {
-                background: linear-gradient(45deg, #4cc9f0, #3ba5d1);
-                border: none;
+                background: linear-gradient(45deg, #4cc9f0, #b14cff);
+                border: 2px solid #ffa63d;
                 font-family: 'Cinzel', serif;
                 padding: 12px 35px;
-                font-size: 1.1rem;
+                font-size: 1.2rem;
+                font-weight: 700;
                 text-shadow: 0 0 5px rgba(76, 201, 240, 0.5);
-                box-shadow: 0 0 10px rgba(76, 201, 240, 0.3);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+                z-index: 22;
+                letter-spacing: 0.5px;
+                position: relative;
+                overflow: hidden;
+                transition: transform 0.3s, box-shadow 0.3s;
             }
-
             .btn-primary:hover {
-                background: linear-gradient(45deg, #72d6f5, #5cb8e3);
-                box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
+                transform: scale(1.05);
+                box-shadow: 0 0 15px rgba(177, 76, 255, 0.7);
+                background: linear-gradient(45deg, #72d6f5, #c77bff);
             }
-
+            .btn-primary::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.3s;
+            }
+            .btn-primary:hover::before {
+                left: 100%;
+            }
             .section-title {
                 font-family: 'Cinzel', serif;
-                font-size: 2.7rem;
+                font-size: 3.2rem;
+                font-weight: 700;
                 color: #4cc9f0;
                 margin-bottom: 30px;
                 text-shadow: 0 0 10px rgba(76, 201, 240, 0.4);
+                letter-spacing: 0.5px;
             }
-
             .section-content {
-                background: rgba(30, 51, 74, 0.3);
-                border-radius: 12px;
-                border: 1px solid #2a5a7a;
-                box-shadow: 0 0 15px rgba(76, 201, 240, 0.2);
-                padding: 40px;
+                background: linear-gradient(135deg, rgba(26, 43, 60, 0.9), rgba(60, 80, 100, 0.85));
+                border: 2px solid #b14cff;
+                outline: 1px solid #ffa63d;
+                outline-offset: 2px;
+                border-radius: 8px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 20px rgba(177, 76, 255, 0.5);
+                clip-path: polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%);
+                perspective: 1000px;
+                transform: rotateX(5deg) rotateY(5deg);
+                padding: 50px;
+                min-height: 600px;
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
+                z-index: 20;
+                backdrop-filter: blur(5px);
+                overflow: visible;
+                /* border: 2px solid green; /* Debugging: Remove after confirming */
             }
-
             .section-content:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 0 20px rgba(76, 201, 240, 0.4);
+                transform: scale(1.05) rotateX(0deg) rotateY(0deg);
+                box-shadow: 0 0 30px rgba(177, 76, 255, 0.8);
+                animation: neonPulse 1s ease-in-out;
             }
-
             .skill-bar {
-                background-color: #2a5a7a;
+                background-color: #1a2b3c;
                 height: 12px;
                 border-radius: 6px;
                 overflow: hidden;
                 margin-bottom: 15px;
-                box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+                box-shadow: inset 0 0 5px rgba(76, 201, 240, 0.3);
+                border: 1px solid #4cc9f0;
             }
-
             .skill-progress {
-                background: linear-gradient(90deg, #4cc9f0, #3ba5d1);
+                background: linear-gradient(90deg, #4cc9f0, #b14cff);
                 height: 100%;
                 transition: width 1.5s ease-in-out;
                 box-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
             }
-
+            .skill p {
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
             .form-control {
-                background-color: #1e334a;
-                border: 1px solid #2a5a7a;
+                background-color: rgba(26, 43, 60, 0.9);
+                border: 2px solid #ffa63d;
                 color: #b8d4e3;
                 font-family: 'Lora', serif;
+                font-size: 1.2rem;
+                font-weight: 500;
                 border-radius: 8px;
                 transition: all 0.3s;
+                z-index: 22;
             }
-
             .form-control:focus {
-                background-color: #1e334a;
+                background-color: rgba(26, 43, 60, 0.9);
                 border-color: #4cc9f0;
                 color: #b8d4e3;
-                box-shadow: 0 0 10px rgba(76, 201, 240, 0.4);
+                box-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
             }
-
             footer {
-                background: linear-gradient(to top, #0d1a26, #1e334a);
-                color: #89a7c3;
+                background: linear-gradient(to top, rgba(13, 26, 38, 0.95), rgba(13, 26, 38, 0.8));
+                color: #b8d4e3;
                 padding: 20px 0;
                 font-family: 'Lora', serif;
-                border-top: 1px solid #2a5a7a;
+                font-size: 1.2rem;
+                font-weight: 500;
+                border-top: 2px solid #4cc9f0;
+                position: relative;
+                z-index: 20;
             }
-
-            .invoker-bg {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                opacity: 0.1;
-                background: url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') no-repeat center/cover;
-                z-index: 0;
-                filter: brightness(0.8);
-            }
-
-            .skills-section h3 {
-                font-size: 1.5rem;
-                margin-bottom: 1rem;
-            }
-
-            .skills-section .row > div {
-                margin-bottom: 1rem;
-            }
-
-            .skills-section i {
-                font-size: 2rem;
-                color: #4cc9f0;
-                margin-bottom: 0.5rem;
-            }
-
-            .card {
-                background-color: #1e334a;
+            .card, .skill-box {
+                background: linear-gradient(135deg, rgba(26, 43, 60, 0.9), rgba(60, 80, 100, 0.85));
                 color: #b8d4e3;
-                border: 1px solid #2a5a7a;
+                border: 2px solid #ffa63d;
+                outline: 1px solid #4cc9f0;
+                outline-offset: 2px;
+                border-radius: 8px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 166, 61, 0.5);
+                clip-path: polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%);
+                perspective: 1000px;
+                transform: rotateX(5deg) rotateY(5deg);
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
+                z-index: 40;
+                display: block;
+                visibility: visible;
+                opacity: 1;
+                position: relative;
+                min-height: 500px;
+                width: 100%;
+                backdrop-filter: blur(5px);
+                overflow: visible;
             }
-
-            .card:hover {
-                transform: scale(1.05);
-                box-shadow: 0 0 20px rgba(76, 201, 240, 0.5);
+            .card:hover, .skill-box:hover {
+                transform: scale(1.05) rotateX(0deg) rotateY(0deg);
+                box-shadow: 0 0 25px rgba(255, 166, 61, 0.8);
+                animation: neonPulse 1s ease-in-out;
             }
-
+            .skill-box {
+                min-height: 400px;
+            }
+            .card-img-top, .skill-box-img {
+                object-fit: contain;
+                display: block;
+                border-bottom: 2px solid #4cc9f0;
+                transition: transform 0.3s, box-shadow 0.3s;
+                width: 100%;
+                max-width: 100%;
+            }
             .card-img-top {
-                object-fit: cover;
-                height: 200px;
+                height: 400px;
+                max-width: 600px;
             }
-
+            .skill-box-img {
+                height: 300px;
+                max-width: 300px;
+            }
+            .card-img-top:hover, .skill-box-img:hover {
+                transform: scale(1.1) rotate(2deg);
+                box-shadow: 0 0 20px rgba(76, 201, 240, 0.7);
+                animation: imageGlow 1s ease-in-out;
+            }
+            .skill-box-cpp:hover {
+                transform: scale(1.05) rotateX(0deg) rotateY(0deg);
+                box-shadow: 0 0 25px rgba(76, 201, 240, 0.8);
+                animation: cyanPulse 1s ease-in-out;
+            }
+            @keyframes cyanPulse {
+                0%, 100% { box-shadow: 0 0 15px rgba(76, 201, 240, 0.5); }
+                50% { box-shadow: 0 0 30px rgba(76, 201, 240, 1); }
+            }
+            .skill-box-java:hover {
+                transform: scale(1.05) rotateX(0deg) rotateY(0deg);
+                box-shadow: 0 0 25px rgba(76, 201, 240, 0.8);
+                animation: cyanPulse 1s ease-in-out;
+            }
+            .skill-box-sql:hover {
+                transform: scale(1.05) rotateX(0deg) rotateY(0deg);
+                box-shadow: 0 0 25px rgba(76, 201, 240, 0.8);
+                animation: cyanPulse 1s ease-in-out;
+            }
+            .skill-box-html:hover {
+                transform: scale(1.05) rotateX(0deg) rotateY(5deg);
+                box-shadow: 0 0 25px rgba(177, 76, 255, 0.8);
+                animation: purplePulse 1s ease-in-out;
+            }
+            @keyframes purplePulse {
+                0%, 100% { box-shadow: 0 0 15px rgba(177, 76, 255, 0.5); }
+                50% { box-shadow: 0 0 30px rgba(177, 76, 255, 1); }
+            }
+            .skill-box-it:hover {
+                transform: translateY(-10px) rotateX(0deg) rotateY(0deg);
+                box-shadow: 0 0 25px rgba(255, 166, 61, 0.8);
+                animation: orangePulse 1s ease-in-out;
+            }
+            @keyframes orangePulse {
+                0%, 100% { box-shadow: 0 0 15px rgba(255, 166, 61, 0.5); }
+                50% { box-shadow: 0 0 30px rgba(255, 166, 61, 1); }
+            }
+            .card-body, .skill-box-body {
+                padding: 15px;
+                z-index: 41;
+            }
+            .card-title, .skill-box-title {
+                font-family: 'Cinzel', serif;
+                font-size: 1.8rem;
+                font-weight: 700;
+                color: #4cc9f0;
+                text-shadow: 0 0 5px rgba(76, 201, 240, 0.5);
+            }
+            .card-text, .skill-box-text {
+                font-size: 1.2rem;
+                font-weight: 500;
+            }
+            #hobbies, #tech-skills, #education, #achievements {
+                min-height: 100vh;
+            }
+            #hobbies .container {
+                z-index: 40;
+                overflow: visible;
+                /* border: 2px solid purple; /* Debugging: Remove after confirming */
+            }
             @media (max-width: 767px) {
+                .content-container {
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 20px;
+                }
                 .hero-img {
-                    margin-bottom: 40px;
+                    max-width: 300px;
+                    height: 300px;
+                    margin-right: 0;
+                    margin-bottom: 20px;
                 }
                 .hero-section {
                     min-height: auto;
                     padding: 80px 20px;
                 }
                 .hero-title {
-                    font-size: 2.5rem;
+                    font-size: 3rem;
                 }
                 .hero-subtitle {
+                    font-size: 1.2rem;
+                }
+                .section-title {
+                    font-size: 2.5rem;
+                }
+                .section-content {
+                    padding: 30px;
+                    min-height: 400px;
+                }
+                .navbar-brand {
+                    font-size: 2rem;
+                }
+                .nav-link {
                     font-size: 1.1rem;
-                    max-width: 100%;
                 }
-                .ms-md-6 {
-                    margin-left: 0 !important;
+                .btn-primary {
+                    font-size: 1rem;
                 }
-                .image-container, .content-container {
-                    padding: 10px;
+                .card, .skill-box {
+                    min-height: 400px;
                 }
-                .skills-section .col-4 {
-                    flex: 0 0 100%;
-                    max-width: 100%;
+                .card-img-top {
+                    height: 300px;
+                    max-width: 400px;
+                }
+                .skill-box-img {
+                    height: 200px;
+                    max-width: 200px;
+                }
+                .card-title, .skill-box-title {
+                    font-size: 1.5rem;
+                }
+                .card-text, .skill-box-text {
+                    font-size: 1rem;
                 }
             }
         </style>
     </head>
-
     <body>
-        <!-- Navbar -->
+        <canvas id="invoker-canvas"></canvas>
+        <div class="background-container"></div>
+        <div class="background-overlay"></div>
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#home">Dayet</a>
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#home">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#education">Education</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#skills">Skills</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#hobbies">Hobbies</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact</a>
-                        </li>
-                    </ul>
+                <nav class="navbar navbar-expand-lg fixed-top">
+                    <div class="container-fluid">
+                        <button
+                            class="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav"
+                            aria-controls="navbarNav"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                        >
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav mx-auto text-center">
+                                <li class="nav-item">
+                                    <a class="navbar-brand" href="#dayether">Dayether</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#about-me">About Me</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#education">Education</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#tech-skills">Tech Skills</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#achievements">Achievements</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#hobbies">Hobbies</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#contacts">Contacts</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
                 </div>
             </div>
         </nav>
-
-        <!-- Home Section -->
-        <section id="home" class="hero-section section-background">
-            <div class="invoker-bg"></div>
+        <section id="dayether" class="hero-section visible">
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-6 text-center">
-                        <div class="image-container">
-                            <img src="./images/dayetpogi.jpg" class="rounded-circle hero-img mx-auto d-block" alt="Kristian Diether Alcantara" onerror="this.src='https://placehold.co/400x400?text=Profile+Image'">
-                        </div>
-                    </div>
-                    <div class="col-md-6 ms-md-6 text-center text-md-start">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
                         <div class="content-container">
-                            <h1 class="hero-title">Kristian Diether Alcantara</h1>
-                            <p class="hero-subtitle">
-                                I am Dayet, a 19-year-old IT student at National University Lipa. Like Invoker, I weave code with precision and passion to create arcane solutions in the tech world.
-                            </p>
-                            <div class="skills-section mt-4">
-                                <h3 class="section-title">Key Skills</h3>
-                                <div class="row">
-                                    <div class="col-4 text-center">
-                                        <i class="bi bi-code-slash"></i>
-                                        <p>C++, Java, SQL</p>
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <i class="bi bi-braces"></i>
-                                        <p>HTML, CSS, Bootstrap</p>
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <i class="bi bi-terminal"></i>
-                                        <p>IT Student, Problem Solver</p>
-                                    </div>
-                                </div>
+                            <img src="./images/dayetpogi.jpg" class="hero-img" alt="Kristian Diether Alcantara" onerror="this.src='https://placehold.co/500x500?text=Profile+Image'">
+                            <div class="hero-content">
+                                <h1 class="hero-title">Kristian Diether Alcantara</h1>
+                                <p class="hero-subtitle">
+                                    I am Dayether, a 19-year-old IT student at National University Lipa. Like Invoker, I weave code with precision and passion to create arcane solutions in the tech world.
+                                </p>
                             </div>
-                            <a href="#contact" class="btn btn-primary mt-4">Let's Work Together</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Education Section -->
-        <section id="education" class="section-background">
-            <div class="invoker-bg"></div>
+        <section id="about-me">
+            <div class="container">
+                <div class="section-content">
+                    <h2 class="section-title text-center">About Me</h2>
+                    <p class="hero-subtitle">
+                        I'm Kristian Diether Alcantara, a passionate IT student fueled by a love for coding, gaming, and coffee. Inspired by the strategic depth of Dota 2's Invoker, I approach programming with creativity and precision. Currently in my second year at National University Lipa, I'm honing my skills in C++, Java, and web development while balancing my hobbies of cooking, hitting the gym, and chilling with my cats.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section id="education">
             <div class="container">
                 <h2 class="section-title text-center">Education</h2>
                 <div class="row">
                     <div class="col-md-6 mb-4">
                         <div class="card">
-                            <img src="https://placehold.co/400x300?text=Elementary+School" class="card-img-top" alt="Elementary School">
+                            <img src="./images/elementary.jpg" class="card-img-top" alt="Elementary School" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
                             <div class="card-body">
                                 <h5 class="card-title">Elementary</h5>
                                 <p class="card-text">Gaudencio B. Lontok Memorial Integrated School, Lipa, Batangas</p>
@@ -392,7 +581,7 @@
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="card">
-                            <img src="https://placehold.co/400x300?text=High+School" class="card-img-top" alt="High School">
+                            <img src="./images/jhs.jpg" class="card-img-top" alt="High School" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
                             <div class="card-body">
                                 <h5 class="card-title">High School</h5>
                                 <p class="card-text">Gaudencio B. Lontok Memorial Integrated School, Lipa, Batangas</p>
@@ -401,7 +590,7 @@
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="card">
-                            <img src="https://placehold.co/400x300?text=Senior+High+School" class="card-img-top" alt="Senior High School">
+                            <img src="./images/shs.jpg" class="card-img-top" alt="Senior High School" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
                             <div class="card-body">
                                 <h5 class="card-title">Senior High School</h5>
                                 <p class="card-text">Plaridel Integrated School, Laguna</p>
@@ -410,7 +599,7 @@
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="card">
-                            <img src="./images/nulipa.jpg" class="card-img-top" alt="College">
+                            <img src="./images/dayte.jpg" class="card-img-top" alt="College" onerror="this.src='https://placehold.co/600x400?text=College+Image'">
                             <div class="card-body">
                                 <h5 class="card-title">College</h5>
                                 <p class="card-text">National University Lipa, BS Information Technology (2nd Year)</p>
@@ -420,13 +609,58 @@
                 </div>
             </div>
         </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="section-background">
-            <div class="invoker-bg"></div>
+        <section id="tech-skills">
             <div class="container">
                 <div class="section-content">
-                    <h2 class="section-title text-center">Skills & Tech Stack</h2>
+                    <h2 class="section-title text-center">Tech Skills</h2>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="skill-box skill-box-cpp">
+                                <img src="./images/c++.jpg" class="skill-box-img" alt="C++" onerror="this.src='https://placehold.co/300x300?text=Image+Not+Found'">
+                                <div class="skill-box-body">
+                                    <h5 class="skill-box-title">C++</h5>
+                                    <p class="skill-box-text">Proficient in building efficient programs</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="skill-box skill-box-java">
+                                <img src="./images/javap.jpg" class="skill-box-img" alt="Java" onerror="this.src='https://placehold.co/300x300?text=Image+Not+Found'">
+                                <div class="skill-box-body">
+                                    <h5 class="skill-box-title">Java</h5>
+                                    <p class="skill-box-text">Strong in object-oriented programming</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="skill-box skill-box-sql">
+                                <img src="./images/mysql.png" class="skill-box-img" alt="SQL" onerror="this.src='https://placehold.co/300x300?text=Image+Not+Found'">
+                                <div class="skill-box-body">
+                                    <h5 class="skill-box-title">SQL</h5>
+                                    <p class="skill-box-text">Skilled in database management</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="skill-box skill-box-html">
+                                <img src="./images/html.jpg" class="skill-box-img" alt="HTML/CSS/Bootstrap" onerror="this.src='https://placehold.co/300x300?text=Image+Not+Found'">
+                                <div class="skill-box-body">
+                                    <h5 class="skill-box-title">HTML, CSS, Bootstrap</h5>
+                                    <p class="skill-box-text">Crafting responsive web interfaces</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="skill-box skill-box-it">
+                                <img src="./images/css.jpg" class="skill-box-img" alt="IT Student/Problem Solver" onerror="this.src='https://placehold.co/300x300?text=Image+Not+Found'">
+                                <div class="skill-box-body">
+                                    <h5 class="skill-box-title">IT Student & Problem Solver</h5>
+                                    <p class="skill-box-text">Tackling challenges with logic</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="section-title text-center mt-5">Proficiency Levels</h3>
                     <div class="skill">
                         <p>C++: 70%</p>
                         <div class="skill-bar"><div class="skill-progress" style="width: 70%;"></div></div>
@@ -446,16 +680,38 @@
                 </div>
             </div>
         </section>
-
-        <!-- Hobbies Section -->
-        <section id="hobbies" class="section-background">
-            <div class="invoker-bg"></div>
+        <section id="achievements">
+            <div class="container">
+                <h2 class="section-title text-center">Achievements</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <img src="./images/nulipa.jpg" class="card-img-top" alt="Achievement 1" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
+                            <div class="card-body">
+                                <h5 class="card-title">Dean’s List</h5>
+                                <p class="card-text">Recognized for academic excellence at National University Lipa</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <img src="./images/panalo.jpg" class="card-img-top" alt="Achievement 2" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
+                            <div class="card-body">
+                                <h5 class="card-title">Coding Competition</h5>
+                                <p class="card-text">Placed in a regional programming contest</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="hobbies">
             <div class="container">
                 <h2 class="section-title text-center">Hobbies</h2>
                 <div class="row">
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="https://placehold.co/400x300?text=Dota+2" class="card-img-top" alt="Dota 2">
+                            <img src="./images/dota2.jpg" class="card-img-top" alt="Dota 2" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
                             <div class="card-body">
                                 <h5 class="card-title">Playing Dota 2</h5>
                             </div>
@@ -463,7 +719,7 @@
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="https://placehold.co/400x300?text=Valorant" class="card-img-top" alt="Valorant">
+                            <img src="./images/valorant.jpg" class="card-img-top" alt="Valorant" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
                             <div class="card-body">
                                 <h5 class="card-title">Playing Valorant</h5>
                             </div>
@@ -471,7 +727,7 @@
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="https://placehold.co/400x300?text=Mobile+Legends" class="card-img-top" alt="Mobile Legends">
+                            <img src="./images/emel.jpg" class="card-img-top" alt="Mobile Legends" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
                             <div class="card-body">
                                 <h5 class="card-title">Playing Mobile Legends</h5>
                             </div>
@@ -479,7 +735,7 @@
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="https://placehold.co/400x300?text=Cooking" class="card-img-top" alt="Cooking">
+                            <img src="./images/cooking.jpg" class="card-img-top" alt="Cooking" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
                             <div class="card-body">
                                 <h5 class="card-title">Cooking</h5>
                             </div>
@@ -487,7 +743,7 @@
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="https://placehold.co/400x300?text=Gym" class="card-img-top" alt="Gym">
+                            <img src="./images/gym.jpg" class="card-img-top" alt="Gym" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
                             <div class="card-body">
                                 <h5 class="card-title">Going to the Gym</h5>
                             </div>
@@ -495,7 +751,7 @@
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="https://placehold.co/400x300?text=Coffee" class="card-img-top" alt="Coffee">
+                            <img src="./images/coffee.jpg" class="card-img-top" alt="Coffee" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
                             <div class="card-body">
                                 <h5 class="card-title">Drinking Coffee</h5>
                             </div>
@@ -503,7 +759,7 @@
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="https://placehold.co/400x300?text=Cats" class="card-img-top" alt="Cats">
+                            <img src="./images/posa.jpg" class="card-img-top" alt="Cats" onerror="this.src='https://placehold.co/600x400?text=Image+Not+Found'">
                             <div class="card-body">
                                 <h5 class="card-title">Spending Time with My Cats</h5>
                             </div>
@@ -512,13 +768,10 @@
                 </div>
             </div>
         </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="section-background">
-            <div class="invoker-bg"></div>
+        <section id="contacts">
             <div class="container">
-                <div class="section-content text-center">
-                    <h2 class="section-title">Get in Touch</h2>
+                <div class="section-content">
+                    <h2 class="section-title text-center">Get in Touch</h2>
                     <p class="mb-4">Ready to conjure some tech magic together? Send me a message!</p>
                     <div class="row justify-content-center">
                         <div class="col-md-6">
@@ -539,16 +792,10 @@
                 </div>
             </div>
         </section>
-
-        <!-- Footer -->
         <footer class="text-center">
             <p class="mb-0">© 2025 Kristian Diether Alcantara. Forged in the arcane fires of code and Dota 2.</p>
         </footer>
-
-        <!-- Bootstrap Icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-        <!-- Bootstrap JavaScript Libraries -->
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -559,5 +806,188 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+        <script>
+            function isElementInViewport(el) {
+                const rect = el.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.9 &&
+                    rect.left >= 0 &&
+                    rect.bottom >= 0 &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+            function handleScroll() {
+                const sections = document.querySelectorAll('section');
+                sections.forEach(section => {
+                    if (isElementInViewport(section) && !section.classList.contains('visible') && !section.classList.contains('force-visible')) {
+                        section.classList.add('visible');
+                        console.log(`${section.id} is now visible via scroll`);
+                    }
+                });
+            }
+            const debouncedHandleScroll = debounce(handleScroll, 100);
+            document.addEventListener('DOMContentLoaded', () => {
+                handleScroll();
+                console.log('Page loaded, checking initial visibility');
+                const dayetherSection = document.getElementById('dayether');
+                const hobbiesSection = document.getElementById('hobbies');
+                dayetherSection.classList.add('force-visible');
+                hobbiesSection.classList.add('force-visible');
+                console.log('Dayether and Hobbies sections forced to visible on load');
+                console.log('Hobbies section initialized with all cards');
+                document.querySelectorAll('#hobbies .card').forEach(card => {
+                    console.log(`Hobbies card initialized: ${card.querySelector('.card-title').textContent}`);
+                });
+                document.querySelectorAll('#hobbies .card-img-top, #tech-skills .skill-box-img, #education .card-img-top, #achievements .card-img-top, #dayether .hero-img').forEach(img => {
+                    img.addEventListener('load', () => console.log(`Image loaded: ${img.src}`));
+                    img.addEventListener('error', () => console.log(`Image failed to load: ${img.src}`));
+                });
+                console.log('Larger box styles and scroll visibility initialized');
+            });
+            window.addEventListener('scroll', debouncedHandleScroll);
+            document.querySelectorAll('.nav-link').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    document.querySelectorAll('section').forEach(section => {
+                        section.classList.remove('force-visible', 'visible');
+                    });
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    setTimeout(() => {
+                        targetSection.classList.add('force-visible');
+                        console.log(`${targetId} forced visible after nav click`);
+                    }, 100);
+                });
+            });
+        </script>
+        <script>
+            const canvas = document.getElementById("invoker-canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let particles = [];
+            const colors = {
+                quas: "#4cc9f0",
+                wex: "#b14cff",
+                exort: "#ffa63d"
+            };
+            for (let i = 0; i < 200; i++) {
+                const type = ["quas", "wex", "exort"][Math.floor(Math.random() * 3)];
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 7 + 5,
+                    color: colors[type],
+                    type: type,
+                    speedX: (Math.random() - 0.5) * 2,
+                    speedY: (Math.random() - 0.5) * 2,
+                    alpha: Math.random() * 0.3 + 0.7,
+                    pulse: Math.random() * Math.PI * 2,
+                    flicker: Math.random(),
+                    trail: []
+                });
+            }
+            function drawParticle(p) {
+                ctx.save();
+                ctx.globalAlpha = p.alpha;
+                ctx.imageSmoothingEnabled = true;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = p.color;
+                if (p.type === "quas") {
+                    const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+                    gradient.addColorStop(0, `rgba(76, 201, 240, ${p.alpha})`);
+                    gradient.addColorStop(1, `rgba(76, 201, 240, 0)`);
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.ellipse(p.x, p.y, p.radius, p.radius * 0.8, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.trail.forEach((t, i) => {
+                        ctx.globalAlpha = p.alpha * (1 - i / p.trail.length) * 0.5;
+                        ctx.beginPath();
+                        ctx.arc(t.x, t.y, p.radius * 0.5, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                } else if (p.type === "wex") {
+                    ctx.fillStyle = p.color;
+                    const angle = Math.random() * Math.PI * 2;
+                    ctx.beginPath();
+                    ctx.moveTo(p.x + p.radius * Math.cos(angle), p.y + p.radius * Math.sin(angle));
+                    ctx.lineTo(
+                        p.x + p.radius * Math.cos(angle + (2 * Math.PI) / 3),
+                        p.y + p.radius * Math.sin(angle + (2 * Math.PI) / 3)
+                    );
+                    ctx.lineTo(
+                        p.x + p.radius * Math.cos(angle + (4 * Math.PI) / 3),
+                        p.y + p.radius * Math.sin(angle + (4 * Math.PI) / 3)
+                    );
+                    ctx.closePath();
+                    ctx.fill();
+                    p.trail.forEach((t, i) => {
+                        ctx.globalAlpha = p.alpha * (1 - i / p.trail.length) * 0.3;
+                        ctx.beginPath();
+                        ctx.arc(t.x, t.y, p.radius * 0.3, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                } else if (p.type === "exort") {
+                    const gradient = ctx.createLinearGradient(p.x, p.y - p.radius, p.x, p.y + p.radius);
+                    gradient.addColorStop(0, `rgba(255, 166, 61, ${p.alpha})`);
+                    gradient.addColorStop(1, `rgba(255, 255, 255, ${p.alpha * 0.8})`);
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.ellipse(p.x, p.y, p.radius * 0.6, p.radius, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.trail.forEach((t, i) => {
+                        ctx.globalAlpha = p.alpha * (1 - i / p.trail.length) * 0.4;
+                        ctx.beginPath();
+                        ctx.arc(t.x, t.y, p.radius * 0.4, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                }
+                ctx.shadowBlur = 0;
+                ctx.globalAlpha = 1;
+                ctx.restore();
+            }
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+                    if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+                    if (p.type === "quas") {
+                        p.alpha = 0.7 + Math.sin(p.pulse) * 0.2;
+                        p.pulse += 0.05;
+                    } else if (p.type === "wex") {
+                        p.alpha = 0.7 + Math.random() * 0.3;
+                    }
+                    p.trail.push({ x: p.x, y: p.y });
+                    if (p.trail.length > 5) p.trail.shift();
+                    drawParticle(p);
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+            console.log('Enhanced particle animation started');
+            window.addEventListener("resize", () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                console.log('Canvas resized');
+            });
+        </script>
     </body>
 </html>
