@@ -10,751 +10,14 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
+        
         <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-        <style>
-            /* Custom Properties */
-            :root {
-                --cyan: #4cc9f0;
-                --purple: #b14cff;
-                --orange: #ffa63d;
-                --text-light: #d9e6f0;
-                --bg-dark: rgba(13, 26, 38, 0.9);
-                --shadow-glow: 0 8px 16px rgba(0, 0, 0, 0.3);
-                --neumorphic-shadow: 8px 8px 16px rgba(0, 0, 0, 0.15), -8px -8px 16px rgba(255, 255, 255, 0.05);
-                --neumorphic-bg: #1a2b3c;
-            }
-            /* Base Styles */
-            * {
-                box-sizing: border-box;
-            }
-            html {
-                scroll-behavior: smooth;
-            }
-            body {
-                font-family: 'Lora', serif;
-                color: var(--text-light);
-                margin: 0;
-                overflow-x: hidden;
-                background: none;
-                position: relative;
-                font-size: 1.2rem;
-                font-weight: 500;
-                line-height: 1.8;
-            }
-            /* Background and Overlay */
-            .background-container {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: url('./images/invoker.png') no-repeat center/cover;
-                background-size: cover;
-                image-rendering: auto;
-                z-index: -3;
-                opacity: 1;
-                animation: backgroundPulse 20s ease-in-out infinite;
-            }
-            @keyframes backgroundPulse {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.02); }
-            }
-            .background-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(13, 26, 38, 0.2);
-                z-index: -2;
-            }
-            #invoker-canvas {
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: -1;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-            }
-            /* Transition Base Class */
-            .transition-base {
-                transition: all 0.3s ease;
-            }
-            /* Content Box (Shared) */
-            .content-box {
-                padding: 30px;
-                background: linear-gradient(135deg, var(--bg-dark), rgba(60, 80, 100, 0.85));
-                border: 2px solid var(--cyan);
-                border-radius: 12px;
-                box-shadow: var(--neumorphic-shadow);
-                perspective: 1000px;
-                transform: translateZ(0);
-                width: 100%;
-                max-width: 1200px;
-                margin: 0 auto;
-                backdrop-filter: blur(5px);
-                overflow: visible;
-            }
-            .content-box:hover {
-                transform: scale(1.02) translateZ(5px);
-                box-shadow: 0 0 20px rgba(76, 201, 240, 0.6);
-            }
-            @keyframes neonPulse {
-                0%, 100% { box-shadow: 0 0 15px rgba(76, 201, 240, 0.4); }
-                50% { box-shadow: 0 0 30px rgba(76, 201, 240, 0.8); }
-            }
-            /* Navbar */
-            .navbar {
-                background: var(--neumorphic-bg);
-                border-bottom: 2px solid var(--cyan);
-                box-shadow: var(--neumorphic-shadow);
-                z-index: 1000;
-                position: fixed;
-                width: 100%;
-                padding: 10px 0;
-                transition: transform 0.5s ease;
-            }
-            .container-fluid {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            .navbar-brand {
-                font-family: 'Cinzel', serif;
-                font-size: 2.8rem;
-                font-weight: 700;
-                color: var(--cyan);
-                text-shadow: 0 0 8px rgba(76, 201, 240, 0.7);
-                letter-spacing: 0.5px;
-                margin-right: 15px;
-                transition: color 0.3s ease, text-shadow 0.3s ease;
-            }
-            .navbar-brand:hover {
-                color: #72d6f5;
-                text-shadow: 0 0 12px rgba(76, 201, 240, 0.9);
-            }
-            .navbar-nav {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-grow: 1;
-            }
-            .nav-link {
-                font-family: 'Lora', serif;
-                font-size: 1.3rem;
-                font-weight: 600;
-                color: var(--text-light) !important;
-                margin: 0 15px;
-                position: relative;
-                letter-spacing: 0.5px;
-                text-align: center;
-                transition: color 0.3s ease, text-shadow 0.3s ease;
-            }
-            .nav-link:hover, .nav-link.active {
-                color: var(--cyan) !important;
-                text-shadow: 0 0 5px rgba(76, 201, 240, 0.5);
-            }
-            .nav-link::after {
-                content: '';
-                position: absolute;
-                width: 0;
-                height: 2px;
-                bottom: -2px;
-                left: 0;
-                background-color: var(--cyan);
-                transition: width 0.3s;
-            }
-            .nav-link:hover::after, .nav-link.active::after {
-                width: 100%;
-            }
-            .navbar-collapse {
-                max-height: 60vh;
-                overflow-y: auto;
-                background: var(--neumorphic-bg);
-                transition: max-height 0.3s ease;
-            }
-            .navbar-toggler {
-                transition: transform 0.3s ease;
-            }
-            .navbar-toggler:hover {
-                transform: rotate(90deg);
-            }
-            /* Section Styling */
-            section {
-                min-height: auto;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 120px 20px;
-                position: relative;
-                opacity: 0;
-                transform: translateY(50px);
-                transition: opacity 0.8s ease, transform 0.8s ease;
-                background: none;
-                z-index: 10;
-                width: 100%;
-            }
-            section.visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            section.force-visible {
-                opacity: 1 !important;
-                transform: none !important;
-                transition: none !important;
-            }
-            /* Unique Section Transitions */
-            #dayether.transition-in {
-                animation: fadeIn 0.8s ease forwards;
-            }
-            #about-me.transition-in {
-                animation: slideFromLeft 0.8s ease forwards;
-            }
-            #education.transition-in {
-                animation: slideFromRight 0.8s ease forwards;
-            }
-            #tech-skills.transition-in {
-                animation: zoomIn 0.8s ease forwards;
-            }
-            #achievements.transition-in {
-                animation: slideUp 0.8s ease forwards;
-            }
-            #hobbies.transition-in {
-                animation: rotateIn 0.8s ease forwards;
-            }
-            #contacts.transition-in {
-                animation: fadeScale 0.8s ease forwards;
-            }
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            @keyframes slideFromLeft {
-                from { transform: translateX(-100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideFromRight {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes zoomIn {
-                from { transform: scale(0.5); opacity: 0; }
-                to { transform: scale(1); opacity: 1; }
-            }
-            @keyframes slideUp {
-                from { transform: translateY(100%); opacity: 0; }
-                to { transform: translateY(0); opacity: 1; }
-            }
-            @keyframes rotateIn {
-                from { transform: rotate(-10deg); opacity: 0; }
-                to { transform: rotate(0); opacity: 1; }
-            }
-            @keyframes fadeScale {
-                from { transform: scale(0.8); opacity: 0; }
-                to { transform: scale(1); opacity: 1; }
-            }
-            .hero-section {
-                z-index: 15;
-            }
-            .content-container {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                gap: 30px;
-                width: 100%;
-                max-width: 1000px;
-                flex-wrap: nowrap;
-                overflow: visible;
-            }
-            .content-container:hover {
-                transform: scale(1.02) translateZ(5px);
-                box-shadow: 0 0 20px rgba(76, 201, 240, 0.6);
-            }
-            .hero-img {
-                width: 100%;
-                max-width: 300px;
-                height: auto;
-                object-fit: cover;
-                border: 4px solid var(--purple);
-                border-radius: 12px;
-                box-shadow: var(--neumorphic-shadow);
-                margin: 0;
-                z-index: 21;
-                filter: brightness(0.9);
-            }
-            .hero-img:hover {
-                transform: scale(1.05);
-                box-shadow: 0 0 20px rgba(177, 76, 255, 0.6);
-            }
-            @keyframes imageGlow {
-                0%, 100% { box-shadow: 0 0 15px rgba(177, 76, 255, 0.4); }
-                50% { box-shadow: 0 0 25px rgba(177, 76, 255, 0.8); }
-            }
-            .hero-content {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                text-align: left;
-                min-width: 0;
-            }
-            .hero-title {
-                font-family: 'Cinzel', serif;
-                font-size: 3rem;
-                font-weight: 700;
-                color: var(--cyan);
-                text-shadow: 0 0 10px rgba(76, 201, 240, 0.6);
-                margin-bottom: 1rem;
-                letter-spacing: 0.5px;
-            }
-            .hero-subtitle {
-                font-family: 'Lora', serif;
-                font-size: 1.2rem;
-                font-weight: 500;
-                color: var(--text-light);
-                line-height: 1.6;
-                margin-bottom: 1.5rem;
-                letter-spacing: 0.5px;
-            }
-            .social-icons {
-                display: flex;
-                gap: 15px;
-                margin-top: 1rem;
-            }
-            .social-icon {
-                font-size: 2rem;
-                color: var(--cyan);
-                transition: transform 0.3s ease, color 0.3s ease;
-            }
-            .social-icon:hover {
-                color: var(--purple);
-                transform: scale(1.2);
-            }
-            .btn-primary {
-                background: linear-gradient(45deg, var(--cyan), var(--purple));
-                border: 2px solid var(--orange);
-                font-family: 'Cinzel', serif;
-                padding: 12px 35px;
-                font-size: 1.2rem;
-                font-weight: 700;
-                text-shadow: 0 0 5px rgba(76, 201, 240, 0.5);
-                box-shadow: var(--neumorphic-shadow);
-                z-index: 22;
-                letter-spacing: 0.5px;
-                position: relative;
-                overflow: hidden;
-                border-radius: 8px;
-            }
-            .btn-primary:hover {
-                transform: scale(1.05);
-                box-shadow: 0 0 15px rgba(177, 76, 255, 0.6);
-                background: linear-gradient(45deg, #72d6f5, #c77bff);
-            }
-            .btn-primary::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-                transition: left 0.3s;
-            }
-            .btn-primary:hover::before {
-                left: 100%;
-            }
-            /* Section Content */
-            .section-title {
-                font-family: 'Cinzel', serif;
-                font-size: 3.2rem;
-                font-weight: 700;
-                color: var(--cyan);
-                margin-bottom: 30px;
-                text-shadow: 0 0 10px rgba(76, 201, 240, 0.4);
-                letter-spacing: 0.5px;
-                text-align: center;
-            }
-            .section-content {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                z-index: 20;
-                overflow: visible;
-                width: 100%;
-            }
-            .section-content p {
-                text-align: center;
-            }
-            /* About Me Section */
-            #about-me .section-content {
-                background: linear-gradient(135deg, var(--neumorphic-bg), rgba(80, 100, 120, 0.85));
-                box-shadow: var(--neumorphic-shadow);
-                border-radius: 12px;
-                padding: 30px;
-            }
-            .about-container {
-                display: flex;
-                flex-direction: row;
-                gap: 20px;
-                align-items: center;
-                width: 100%;
-                flex-wrap: nowrap;
-                overflow: visible;
-            }
-            .about-img {
-                width: 100%;
-                max-width: 250px;
-                height: auto;
-                border-radius: 12px;
-                border: 2px solid var(--cyan);
-                box-shadow: var(--neumorphic-shadow);
-            }
-            .about-text {
-                flex: 1;
-                text-align: left;
-                min-width: 0;
-            }
-            /* Skill Bar */
-            .skill-bar {
-                background-color: var(--neumorphic-bg);
-                height: 12px;
-                border-radius: 6px;
-                overflow: hidden;
-                margin-bottom: 15px;
-                box-shadow: inset var(--neumorphic-shadow);
-                border: 1px solid var(--cyan);
-            }
-            .skill-progress {
-                background: linear-gradient(90deg, var(--cyan), var(--purple));
-                height: 100%;
-                transition: width 1.5s ease-in-out;
-                box-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
-            }
-            .skill p {
-                font-size: 1.2rem;
-                font-weight: 600;
-                text-align: center;
-            }
-            /* Form */
-            .form-control {
-                background-color: var(--neumorphic-bg);
-                border: 2px solid var(--orange);
-                color: #ffffff;
-                font-family: 'Lora', serif;
-                font-size: 1.2rem;
-                font-weight: 500;
-                border-radius: 8px;
-                box-shadow: var(--neumorphic-shadow);
-            }
-            .form-control:focus {
-                border-color: var(--cyan);
-                box-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
-            }
-            .form-control.is-invalid {
-                border-color: #dc3545;
-            }
-            .form-control::placeholder {
-                color: #ffffff;
-                opacity: 0.7;
-            }
-            #contacts .section-title {
-                color: #ffffff;
-                text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-            }
-            #contacts .contact-text {
-                color: #ffffff;
-            }
-            /* Alert */
-            .alert {
-                margin-top: 20px;
-                text-align: center;
-                box-shadow: var(--neumorphic-shadow);
-                border-radius: 8px;
-            }
-            /* Card and Skill Box */
-            .card, .skill-box {
-                background: var(--neumorphic-bg);
-                color: var(--text-light);
-                border: 2px solid var(--orange);
-                border-radius: 12px;
-                box-shadow: var(--neumorphic-shadow);
-                perspective: 1000px;
-                transform: translateZ(0);
-                z-index: 40;
-                position: relative;
-                overflow: visible;
-                min-height: 350px;
-                width: 100%;
-                backdrop-filter: blur(5px);
-                aspect-ratio: 4 / 3;
-                display: flex;
-                flex-direction: column;
-            }
-            .card:hover, .skill-box:hover {
-                transform: scale(1.05);
-                box-shadow: 0 0 20px rgba(255, 166, 61, 0.6);
-            }
-            .card-img-top, .skill-box-img {
-                object-fit: cover;
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: 1;
-                filter: brightness(0.9);
-            }
-            .card-background {
-                background-size: 200px;
-                transition: transform 0.3s ease, background-size 0.3s ease;
-            }
-            .card:hover .card-background {
-                transform: scale(1.15);
-                background-size: 300px;
-            }
-            .card-grid:hover > .card:not(:hover) {
-                transform: scale(0.9);
-            }
-            .card-grid:hover > .card:not(:hover) .card-background {
-                filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
-            }
-            .card-body, .skill-box-body {
-                position: absolute;
-                bottom: 0;
-                width: 100%;
-                background: rgba(26, 43, 60, 0.85);
-                z-index: 2;
-                padding: 10px;
-                backdrop-filter: blur(3px);
-                opacity: 0;
-                visibility: hidden;
-                transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-                text-align: center;
-            }
-            .card:hover .card-body, .skill-box:hover .skill-box-body {
-                opacity: 1;
-                visibility: visible;
-            }
-            /* Education Card */
-            #education .card {
-                min-height: 450px;
-            }
-            #education .card-img-top {
-                object-fit: contain;
-                max-height: 80%;
-                object-position: center;
-                width: 100%;
-                height: auto;
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: 1;
-            }
-            #education .card:hover .card-body {
-                transform: translateY(-10px);
-            }
-            #hobbies .card:hover .card-body {
-                transform: scale(1.05);
-            }
-            /* Skill Box Hover Effects */
-            .skill-box-cpp:hover, .skill-box-java:hover, .skill-box-sql:hover {
-                box-shadow: 0 0 20px rgba(76, 201, 240, 0.6);
-            }
-            .skill-box-html-css:hover {
-                box-shadow: 0 0 20px rgba(177, 76, 255, 0.6);
-            }
-            .skill-box-bootstrap:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 0 20px rgba(255, 166, 61, 0.6);
-            }
-            .card-title, .skill-box-title {
-                font-family: 'Cinzel', serif;
-                font-size: 1.8rem;
-                font-weight: 700;
-                color: var(--cyan);
-                text-shadow: 0 0 5px rgba(76, 201, 240, 0.5);
-                white-space: normal;
-                overflow: visible;
-                max-width: 100%;
-            }
-            .card-text, .skill-box-text {
-                font-size: 1.2rem;
-                font-weight: 500;
-            }
-            /* Grid Alignment */
-            .row {
-                align-items: stretch;
-            }
-            .card-grid {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 20px;
-                width: 100%;
-                justify-content: center;
-            }
-            /* Typewriter Effect */
-            .typewriter {
-                display: inline-block;
-                overflow: visible;
-                white-space: normal;
-                animation: typing 3s steps(40, end) forwards;
-                width: 100%;
-            }
-            @keyframes typing {
-                from { width: 0; }
-                to { width: 100%; }
-            }
-            /* Footer */
-            footer {
-                background: linear-gradient(to top, var(--neumorphic-bg), rgba(13, 26, 38, 0.8));
-                color: var(--text-light);
-                padding: 20px 0;
-                font-family: 'Lora', serif;
-                font-size: 1.2rem;
-                font-weight: 500;
-                border-top: 2px solid var(--cyan);
-                position: relative;
-                z-index: 20;
-                text-align: center;
-                box-shadow: var(--neumorphic-shadow);
-            }
-            /* Media Queries */
-            @media (max-width: 1200px) { /* Medium-Large */
-                .navbar { padding: 8px 0; }
-                .navbar-brand { font-size: 2.5rem; }
-                .nav-link { font-size: 1.2rem; margin: 0 10px; }
-                section { padding: 100px 15px; }
-                .content-box { padding: 20px; }
-                .card, #education .card { min-height: 400px; }
-                .skill-box { min-height: 340px; }
-                .card-title, .skill-box-title { font-size: 1.6rem; }
-                .card-text, .skill-box-text { font-size: 1.1rem; }
-                .hero-img { max-width: 250px; }
-                .about-img { max-width: 200px; }
-                .content-container { max-width: 900px; }
-            }
-            @media (max-width: 991px) { /* Medium (Tablet) */
-                .content-container {
-                    flex-direction: column;
-                    align-items: center;
-                    text-align: center;
-                    flex-wrap: wrap;
-                }
-                .hero-img {
-                    max-width: 300px;
-                    margin-bottom: 20px;
-                }
-                .hero-content {
-                    text-align: center;
-                    min-width: 100%;
-                }
-                .hero-title {
-                    font-size: 2.5rem;
-                }
-                .hero-subtitle {
-                    font-size: 1.1rem;
-                }
-                .social-icons {
-                    justify-content: center;
-                }
-                .btn-primary {
-                    margin: 0 auto;
-                    display: block;
-                }
-                .content-box {
-                    padding: 20px;
-                }
-                .skill-box { min-height: 320px; }
-                .col-12.col-md-6 { padding-left: 12px; padding-right: 12px; }
-                .about-container {
-                    flex-direction: column;
-                    text-align: center;
-                    flex-wrap: wrap;
-                }
-                .about-img {
-                    margin-bottom: 20px;
-                    max-width: 250px;
-                }
-                .about-text {
-                    min-width: 100%;
-                }
-            }
-            @media (max-width: 767px) { /* Small */
-                .content-container {
-                    flex-direction: column;
-                    align-items: center;
-                    text-align: center;
-                }
-                .hero-img {
-                    max-width: 280px;
-                    margin-bottom: 20px;
-                }
-                .hero-content {
-                    text-align: center;
-                }
-                .hero-title {
-                    font-size: 2.5rem;
-                }
-                .hero-subtitle {
-                    font-size: 1.1rem;
-                }
-                .social-icons {
-                    justify-content: center;
-                }
-                .btn-primary {
-                    margin: 0 auto;
-                    display: block;
-                }
-                .content-box {
-                    padding: 15px;
-                }
-                .navbar { padding: 6px 0; }
-                .container-fluid { flex-direction: column; align-items: center; }
-                .navbar-brand { font-size: 2.2rem; text-align: center; padding: 0 1rem; }
-                .navbar-nav { margin-top: 8px; flex-direction: column; align-items: center; }
-                .nav-link { margin: 8px 0; font-size: 1.1rem; }
-                section { padding: 80px 15px; }
-                .card, #education .card { min-height: 350px; margin: 0 auto; }
-                .skill-box { min-height: 320px; margin: 0 auto; }
-                #education .card-img-top { max-height: 75%; }
-                .card-title, .skill-box-title { font-size: 1.5rem; }
-                .card-text, .skill-box-text { font-size: 1rem; line-height: 1.6; }
-                .about-img { max-width: 200px; }
-            }
-            @media (max-width: 576px) { /* Minimized */
-                .navbar { padding: 5px 0; }
-                .navbar-brand { font-size: 2rem; }
-                .nav-link { font-size: 1rem; margin: 6px 0; }
-                section { padding: 70px 10px; }
-                .content-box { padding: 15px; }
-                .card, #education .card { min-height: 300px; }
-                .skill-box { min-height: 300px; }
-                #education .card-img-top { max-height: 70%; }
-                .card-title, .skill-box-title { font-size: 1.4rem; }
-                .card-text, .skill-box-text { font-size: 0.9rem; line-height: 1.6; }
-                .hero-img { max-width: 250px; }
-                .about-img { max-width: 180px; }
-                .content-container { max-width: 100%; }
-            }
-            @media (max-width: 400px) { /* Ultra-Small */
-                .nav-link { font-size: 0.9rem; }
-                .form-control { font-size: 0.9rem; }
-                .hero-img { max-width: 200px; }
-                .about-img { max-width: 150px; }
-            }
-            /* Fallback for no JavaScript */
-            section {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        </style>
+        <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
         <canvas id="invoker-canvas" aria-label="Decorative Invoker particle animation" aria-hidden="true"></canvas>
-        <div class="background-container"></div>
+        <div class="background-container parallax"></div>
         <div class="background-overlay"></div>
         <header role="banner">
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top" role="navigation">
@@ -783,6 +46,9 @@
                                 <a class="nav-link" href="#tech-skills">Tech Skills</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="#projects">Projects</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="#achievements">Achievements</a>
                             </li>
                             <li class="nav-item">
@@ -797,21 +63,21 @@
             </nav>
         </header>
         <main role="main">
-            <section id="dayether" class="hero-section visible" role="region" aria-labelledby="home-title">
+            <section id="dayether" class="hero-section animated" data-animation="zoomIn" role="region" aria-labelledby="home-title">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-10 col-md-12">
                             <div class="content-box content-container d-flex transition-base">
                                 <img src="./images/dayetpogi.jpg" class="hero-img transition-base" alt="Kristian Diether Alcantara, IT student" onerror="this.src='https://placehold.co/500x500?text=Profile+Image'">
                                 <div class="hero-content">
-                                    <h1 class="hero-title typewriter" id="home-title">Hi!</h1>
+                                    <h1 class="hero-title typewriter" id="home-title">Hilu!</h1>
                                     <p class="hero-subtitle typewriter">
                                         I am Kristian Diether Alcantara, a 19-year-old IT student at National University Lipa. Like Invoker, I weave code with precision and passion to create arcane solutions in the tech world.
                                     </p>
                                     <div class="social-icons">
-                                        <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                                        <a href="https://github.com" target="_blank" class="social-icon" aria-label="GitHub"><i class="bi bi-github"></i></a>
-                                        <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                                        <a href="https://www.facebook.com/qqscboq" target="_blank" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                                        <a href="https://github.com/Dayether" target="_blank" class="social-icon" aria-label="GitHub"><i class="bi bi-github"></i></a>
+                                        <a href="https://www.instagram.com/deysquared" target="_blank" class="social-icon" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
                                     </div>
                                     <a href="#tech-skills" class="btn btn-primary btn-lg transition-base mt-3">View My Skills</a>
                                 </div>
@@ -820,76 +86,85 @@
                     </div>
                 </div>
             </section>
-            <section id="about-me" role="region" aria-labelledby="about-title">
-                <div class="container">
-                    <div class="content-box section-content transition-base">
-                        <h2 class="section-title typewriter" id="about-title">About Me</h2>
-                        <div class="about-container">
-                            <img src="./images/dayet-about.jpg" class="about-img transition-base" alt="Kristian Diether Alcantara coding" onerror="this.src='https://placehold.co/300x300?text=About+Image'">
-                            <div class="about-text">
-                                <p class="hero-subtitle typewriter">
-                                    Dayet, a passionate IT student fueled by a love for coding, gaming, and coffee. Inspired by the strategic depth of Dota 2's Invoker, I approach programming with creativity and precision. Currently in my second year at National University Lipa, I'm honing my skills in C++, Java, and web development while balancing my hobbies of cooking, hitting the gym, and chilling with my cats.
-                                </p>
-                                <p class="hero-subtitle typewriter">
-                                    My journey is about crafting elegant solutions and embracing challenges, much like casting Invoker's spells in the heat of battle.
-                                </p>
+
+            <section id="about-me" class="animated" data-animation="fadeInLeft" role="region" aria-labelledby="about-title">
+                <div class="highlight-container">
+                    <div class="container">
+                        <div class="content-box section-content transition-base">
+                            <h2 class="section-title typewriter" id="about-title">About Me</h2>
+                            <div class="about-container">
+                                <img src="./images/dayet-about.jpg" class="about-img transition-base" alt="Kristian Diether Alcantara coding" onerror="this.src='https://placehold.co/300x300?text=About+Image'">
+                                <div class="about-text">
+                                    <p class="hero-subtitle typewriter">
+                                        Hi, I'm Dayet — a passionate IT student driven by an insatiable love for coding, gaming, and coffee-fueled problem-solving sessions. My journey into the world of technology began with curiosity and grew into a full-blown obsession, especially as I explored the limitless possibilities of software development. Whether I'm diving into algorithms, building dynamic web applications, or crafting complex systems, I bring both creativity and analytical precision to everything I do.
+
+                                        Much like Dota 2’s Invoker — whose gameplay demands mastery, adaptability, and strategy — I see programming as both an art and a science. I draw inspiration from the way Invoker juggles spells with precision and timing, applying that same energy to the way I write code, debug errors, and tackle challenges head-on.
+                                        
+                                        When I'm not lost in lines of code or absorbed in a Dota match, you'll probably find me experimenting with new tech, refining my skills, or just enjoying a strong cup of coffee while dreaming up my next big idea. Welcome to my digital space — where passion meets purpose, and code becomes creativity.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <section id="education" role="region" aria-labelledby="education-title">
-                <div class="container">
-                    <h2 class="section-title typewriter" id="education-title">Education</h2>
-                    <div class="row card-grid">
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/elementary.jpg" class="card-img-top card-background transition-base" alt="Elementary school building" onerror="this.src='https://placehold.co/600x400?text=Elementary+Image'">
-                                <div class="card-footer">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Elementary</h3>
-                                        <p class="card-text">Gaudencio B. Lontok Memorial Integrated School, Lipa, Batangas</p>
-                                    </div>
-                                </div>
-                            </article>
+
+            <!-- Education Section -->
+<section id="education" class="animated" data-animation="fadeInRight" role="region" aria-labelledby="education-title">
+    <div class="container">
+        <div class="content-box section-content transition-base">
+            <h2 class="section-title typewriter" id="education-title">Education</h2>
+            <div class="row card-grid">
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/elementary.jpg" class="card-img-top card-background transition-base" alt="Elementary school building" onerror="this.src='https://placehold.co/600x400?text=Elementary+Image'">
+                        <div class="card-footer">
+                            <div class="card-body">
+                                <h3 class="card-title">Elementary</h3>
+                                <p class="card-text">Gaudencio B. Lontok Memorial Integrated School, Lipa, Batangas</p>
+                            </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/jhs.jpg" class="card-img-top card-background transition-base" alt="High school campus" onerror="this.src='https://placehold.co/600x400?text=High+School+Image'">
-                                <div class="card-footer">
-                                    <div class="card-body">
-                                        <h3 class="card-title">High School</h3>
-                                        <p class="card-text">Gaudencio B. Lontok Memorial Integrated School, Lipa, Batangas</p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/shs.jpg" class="card-img-top card-background transition-base" alt="Senior high school facility" onerror="this.src='https://placehold.co/600x400?text=Senior+High+Image'">
-                                <div class="card-footer">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Senior High School</h3>
-                                        <p class="card-text">Plaridel Integrated School, Laguna</p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/dayte.jpg" class="card-img-top card-background transition-base" alt="Kristian Diether Alcantara at National University Lipa" onerror="this.src='https://placehold.co/600x400?text=College+Image'">
-                                <div class="card-footer">
-                                    <div class="card-body">
-                                        <h3 class="card-title">College</h3>
-                                        <p class="card-text">National University Lipa, BS Information Technology (2nd Year)</p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
+                    </article>
                 </div>
-            </section>
-            <section id="tech-skills" role="region" aria-labelledby="skills-title">
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/jhs.jpg" class="card-img-top card-background transition-base" alt="High school campus" onerror="this.src='https://placehold.co/600x400?text=High+School+Image'">
+                        <div class="card-footer">
+                            <div class="card-body">
+                                <h3 class="card-title">High School</h3>
+                                <p class="card-text">Gaudencio B. Lontok Memorial Integrated School, Lipa, Batangas</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/shs.jpg" class="card-img-top card-background transition-base" alt="Senior high school facility" onerror="this.src='https://placehold.co/600x400?text=Senior+High+Image'">
+                        <div class="card-footer">
+                            <div class="card-body">
+                                <h3 class="card-title">Senior High School</h3>
+                                <p class="card-text">Plaridel Integrated School, Laguna</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/dayte.jpg" class="card-img-top card-background transition-base" alt="Kristian Diether Alcantara at National University Lipa" onerror="this.src='https://placehold.co/600x400?text=College+Image'">
+                        <div class="card-footer">
+                            <div class="card-body">
+                                <h3 class="card-title">College</h3>
+                                <p class="card-text">National University Lipa, BS Information Technology (2nd Year)</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+            <section id="tech-skills" class="animated" data-animation="fadeInUp" role="region" aria-labelledby="skills-title">
                 <div class="container">
                     <div class="content-box section-content transition-base">
                         <h2 class="section-title typewriter" id="skills-title">Tech Skills</h2>
@@ -991,124 +266,167 @@
                     </div>
                 </div>
             </section>
-            <section id="achievements" role="region" aria-labelledby="achievements-title">
-                <div class="container">
-                    <h2 class="section-title typewriter" id="achievements-title">Achievements</h2>
-                    <div class="row card-grid">
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/nulipa.jpg" class="card-img-top card-background transition-base" alt="National University Lipa campus" onerror="this.src='https://placehold.co/600x400?text=Achievement+Image'">
-                                <div class="card-body">
-                                    <h3 class="card-title">Dean’s List</h3>
-                                    <p class="card-text">Recognized for academic excellence at National University Lipa</p>
-                                </div>
-                            </article>
+
+            <!-- Projects Section -->
+<section id="projects" class="animated" data-animation="zoomIn" role="region" aria-labelledby="projects-title">
+    <div class="container">
+        <div class="content-box section-content transition-base">
+            <h2 class="section-title typewriter" id="projects-title">Projects</h2>
+            <div class="row card-grid">
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/equitrace.jpg" class="card-img-top card-background transition-base" alt="Project 1">
+                        <div class="card-body">
+                            <h3 class="card-title">Equitrace</h3>
+                            <p class="card-text">EquiTRACE is a Java program built using JFrame to address SDG 16. It allows users to report issues by selecting a category related to the environment. The program promotes peaceful and inclusive societies, provides access to justice, and builds effective, accountable institutions.</p>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/panalo.jpg" class="card-img-top card-background transition-base" alt="Tournament championship trophy" onerror="this.src='https://placehold.co/600x400?text=Achievement+Image'">
-                                <div class="card-body">
-                                    <h3 class="card-title">Champion</h3>
-                                    <p class="card-text">Won championships in regional Dota 2 and coding tournaments</p>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
+                    </article>
                 </div>
-            </section>
-            <section id="hobbies" role="region" aria-labelledby="hobbies-title">
-                <div class="container">
-                    <h2 class="section-title typewriter" id="hobbies-title">Hobbies</h2>
-                    <div class="row card-grid">
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/dota2.jpg" class="card-img-top card-background transition-base" alt="Dota 2 gameplay" onerror="this.src='https://placehold.co/600x400?text=Dota+2+Image'">
-                                <div class="card-body">
-                                    <h3 class="card-title">Playing Dota 2</h3>
-                                </div>
-                            </article>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/studentclub.jpg" class="card-img-top card-background transition-base" alt="Project 2">
+                        <div class="card-body">
+                            <h3 class="card-title">IT Student Club System</h3>
+                            <p class="card-text">The IT Student Club System is a mobile app built using Java in Android Studio. It helps manage IT student organizations by allowing admins to add, update, and delete member records, post announcements, and respond to member queries. The app provides a simple and user-friendly interface for efficient club management.</p>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/valorant.jpg" class="card-img-top card-background transition-base" alt="Valorant gameplay" onerror="this.src='https://placehold.co/600x400?text=Valorant+Image'">
-                                <div class="card-body">
-                                    <h3 class="card-title">Playing Valorant</h3>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/emel.jpg" class="card-img-top card-background transition-base" alt="Mobile Legends gameplay" onerror="this.src='https://placehold.co/600x400?text=Mobile+Legends+Image'">
-                                <div class="card-body">
-                                    <h3 class="card-title">Playing Mobile Legends</h3>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/cooking.jpg" class="card-img-top card-background transition-base" alt="Cooking in the kitchen" onerror="this.src='https://placehold.co/600x400?text=Cooking+Image'">
-                                <div class="card-body">
-                                    <h3 class="card-title">Cooking</h3>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/gym.jpg" class="card-img-top card-background transition-base" alt="Gym workout equipment" onerror="this.src='https://placehold.co/600x400?text=Gym+Image'">
-                                <div class="card-body">
-                                    <h3 class="card-title">Going to the Gym</h3>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="card transition-base">
-                                <img src="./images/coffee.jpg" class="card-img-top card-background transition-base" alt="Cup of coffee" onerror="this.src='https://placehold.co/600x400?text=Coffee+Image'">
-                                <div class="card-body">
-                                    <h3 class="card-title">Drinking Coffee</h3>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
+                    </article>
                 </div>
-            </section>
-            <section id="contacts" role="region" aria-labelledby="contacts-title">
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/periodic.jpg" class="card-img-top card-background transition-base" alt="Project 3">
+                        <div class="card-body">
+                            <h3 class="card-title">PeriodicPal</h3>
+                            <p class="card-text">PeriodicPal is a Java program built using JFrame. It provides an interactive interface for users to access information about elements in the periodic table, including their name, symbol, atomic number, and atomic weight. The program uses file reading, arrays, string manipulation, and multithreading to enhance functionality.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+            <section id="achievements" class="animated" data-animation="rotateIn" role="region" aria-labelledby="achievements-title">
                 <div class="container">
                     <div class="content-box section-content transition-base">
-                        <h2 class="section-title typewriter" id="contacts-title">Get in Touch</h2>
-                        <p class="contact-text mb-4 typewriter">Ready to conjure some tech magic together? Send me a message!</p>
-                        <div class="row justify-content-center">
-                            <div class="col-md-6">
-                                <form id="contact-form" novalidate>
-                                    <fieldset>
-                                        <legend class="visually-hidden">Contact Form</legend>
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label">Full Name</label>
-                                            <input type="text" class="form-control" id="name" placeholder="Enter your full name" required />
-                                            <div class="invalid-feedback">Please enter your full name.</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label">Email Address</label>
-                                            <input type="email" class="form-control" id="email" placeholder="Enter your email address" required />
-                                            <div class="invalid-feedback">Please enter a valid email address.</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="message" class="form-label">Message</label>
-                                            <textarea class="form-control" id="message" rows="5" placeholder="Write your message here" required></textarea>
-                                            <div class="invalid-feedback">Please enter a message.</div>
-                                        </div>
-                                        <div class="d-flex justify-content-center">
-                                            <button type="submit" class="btn btn-primary btn-lg transition-base">Invoke Message</button>
-                                        </div>
-                                    </fieldset>
-                                </form>
-                                <div id="form-feedback" class="alert alert-success d-none" role="alert">
-                                    Message sent successfully! (Simulated)
-                                </div>
+                        <h2 class="section-title typewriter" id="achievements-title">Achievements</h2>
+                        <div class="row card-grid">
+                            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <article class="card transition-base">
+                                    <img src="./images/nulipa.jpg" class="card-img-top card-background transition-base" alt="National University Lipa campus" onerror="this.src='https://placehold.co/600x400?text=Achievement+Image'">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Dean’s List</h3>
+                                        <p class="card-text">Recognized for academic excellence at National University Lipa</p>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <article class="card transition-base">
+                                    <img src="./images/panalo.jpg" class="card-img-top card-background transition-base" alt="Tournament championship trophy" onerror="this.src='https://placehold.co/600x400?text=Achievement+Image'">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Champion</h3>
+                                        <p class="card-text">Won championships in Mobile Legends Tournaments</p>
+                                    </div>
+                                </article>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+            <!-- Hobbies Section -->
+<section id="hobbies" class="animated" data-animation="fadeInLeft" role="region" aria-labelledby="hobbies-title">
+    <div class="container">
+        <div class="content-box section-content transition-base">
+            <h2 class="section-title typewriter" id="hobbies-title">Hobbies</h2>
+            <div class="row card-grid">
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/dota2.jpg" class="card-img-top card-background transition-base" alt="Dota 2 gameplay" onerror="this.src='https://placehold.co/600x400?text=Dota+2+Image'">
+                        <div class="card-body">
+                            <h3 class="card-title">Playing Dota 2</h3>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/valorant.jpg" class="card-img-top card-background transition-base" alt="Valorant gameplay" onerror="this.src='https://placehold.co/600x400?text=Valorant+Image'">
+                        <div class="card-body">
+                            <h3 class="card-title">Playing Valorant</h3>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/emel.jpg" class="card-img-top card-background transition-base" alt="Mobile Legends gameplay" onerror="this.src='https://placehold.co/600x400?text=Mobile+Legends+Image'">
+                        <div class="card-body">
+                            <h3 class="card-title">Playing Mobile Legends</h3>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/cooking.jpg" class="card-img-top card-background transition-base" alt="Cooking in the kitchen" onerror="this.src='https://placehold.co/600x400?text=Cooking+Image'">
+                        <div class="card-body">
+                            <h3 class="card-title">Cooking</h3>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/gym.jpg" class="card-img-top card-background transition-base" alt="Gym workout equipment" onerror="this.src='https://placehold.co/600x400?text=Gym+Image'">
+                        <div class="card-body">
+                            <h3 class="card-title">Going to the Gym</h3>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="card transition-base">
+                        <img src="./images/coffee.jpg" class="card-img-top card-background transition-base" alt="Cup of coffee" onerror="this.src='https://placehold.co/600x400?text=Coffee+Image'">
+                        <div class="card-body">
+                            <h3 class="card-title">Drinking Coffee</h3>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+            <section id="contacts" class="animated" data-animation="fadeInRight" role="region" aria-labelledby="contacts-title">
+    <div class="container">
+        <div class="content-box section-content transition-base">
+            <h2 class="section-title typewriter" id="contacts-title">Get in Touch</h2>
+            <p class="contact-text mb-4 typewriter">Ready to conjure some tech magic together? Send me a message!</p>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form id="contact-form" novalidate>
+                        <fieldset>
+                            <legend class="visually-hidden">Contact Form</legend>
+                            <div class="floating-label">
+                                <input type="text" class="form-control" id="name" required />
+                                <span class="label-text">Full Name</span>
+                                <div class="invalid-feedback">Please enter your full name.</div>
+                            </div>
+                            <div class="floating-label">
+                                <input type="email" class="form-control" id="email" required />
+                                <span class="label-text">Email Address</span>
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
+                            </div>
+                            <div class="floating-label">
+                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                                <span class="label-text">Message</span>
+                                <div class="invalid-feedback">Please enter a message.</div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary btn-lg transition-base">Invoke Message</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
         </main>
         <footer role="contentinfo">
             <p class="mb-0 typewriter">© 2025 Crafted by Kristian ‘Dayet’ Alcantara. Forged in the arcane fires of code and Dota 2.</p>
@@ -1123,210 +441,7 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
-        <script>
-            // Scroll Visibility and Navigation
-            function isElementInViewport(el) {
-                const rect = el.getBoundingClientRect();
-                return (
-                    rect.top >= -100 &&
-                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + 100
-                );
-            }
-            function handleScroll() {
-                const sections = document.querySelectorAll('section');
-                sections.forEach(section => {
-                    if (isElementInViewport(section) && !section.classList.contains('visible') && !section.classList.contains('force-visible')) {
-                        section.classList.add('visible');
-                    }
-                });
-            }
-            // Initialize
-            document.addEventListener('DOMContentLoaded', () => {
-                // Ensure Home section is visible
-                document.getElementById('dayether').classList.add('visible');
-                // Check initial visibility
-                handleScroll();
-                // Fallback: Make all sections visible after 1 second
-                setTimeout(() => {
-                    document.querySelectorAll('section').forEach(section => {
-                        if (!section.classList.contains('visible') && !section.classList.contains('force-visible')) {
-                            section.classList.add('visible');
-                        }
-                    });
-                }, 1000);
-            });
-            // Scroll event
-            window.addEventListener('scroll', handleScroll);
-            // Navigation clicks
-            document.querySelectorAll('.nav-link').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetSection = document.getElementById(targetId);
-                    // Remove existing transition classes
-                    document.querySelectorAll('section').forEach(section => {
-                        section.classList.remove('transition-in');
-                    });
-                    // Scroll to section
-                    window.scrollTo({
-                        top: targetSection.offsetTop - 70,
-                        behavior: 'smooth'
-                    });
-                    // Apply section-specific transition
-                    targetSection.classList.add('visible', 'transition-in');
-                    // Remove transition class after animation
-                    setTimeout(() => {
-                        targetSection.classList.remove('transition-in');
-                    }, 800);
-                });
-            });
-            // Mobile Card Text Toggle
-            function toggleCardText(card) {
-                const body = card.querySelector('.card-body, .skill-box-body');
-                if (body) {
-                    body.classList.toggle('visible');
-                    body.style.opacity = body.classList.contains('visible') ? '1' : '0';
-                    body.style.visibility = body.classList.contains('visible') ? 'visible' : 'hidden';
-                }
-            }
-            // Form Validation
-            function validateForm() {
-                const form = document.getElementById('contact-form');
-                const feedback = document.getElementById('form-feedback');
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    if (form.checkValidity()) {
-                        feedback.classList.remove('d-none');
-                        feedback.classList.add('d-block');
-                        form.reset();
-                        form.classList.remove('was-validated');
-                        setTimeout(() => {
-                            feedback.classList.remove('d-block');
-                            feedback.classList.add('d-none');
-                        }, 3000);
-                    } else {
-                        form.classList.add('was-validated');
-                    }
-                });
-            }
-            document.addEventListener('DOMContentLoaded', () => {
-                document.querySelectorAll('.card, .skill-box').forEach(card => {
-                    card.addEventListener('touchstart', () => toggleCardText(card));
-                });
-                validateForm();
-            });
-        </script>
-        <script>
-            // Particle Animation
-            const canvas = document.getElementById("invoker-canvas");
-            const ctx = canvas.getContext("2d");
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            let particles = [];
-            const colors = {
-                quas: "#4cc9f0",
-                wex: "#b14cff",
-                exort: "#ffa63d"
-            };
-            for (let i = 0; i < 100; i++) {
-                const type = ["quas", "wex", "exort"][Math.floor(Math.random() * 3)];
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 7 + 5,
-                    color: colors[type],
-                    type: type,
-                    speedX: (Math.random() - 0.5) * 2,
-                    speedY: (Math.random() - 0.5) * 2,
-                    alpha: Math.random() * 0.3 + 0.7,
-                    pulse: Math.random() * Math.PI * 2,
-                    trail: []
-                });
-            }
-            function drawParticle(p) {
-                ctx.save();
-                ctx.globalAlpha = p.alpha;
-                ctx.imageSmoothingEnabled = true;
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = p.color;
-                if (p.type === "quas") {
-                    const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-                    gradient.addColorStop(0, `rgba(76, 201, 240, ${p.alpha})`);
-                    gradient.addColorStop(1, `rgba(76, 201, 240, 0)`);
-                    ctx.fillStyle = gradient;
-                    ctx.beginPath();
-                    ctx.ellipse(p.x, p.y, p.radius, p.radius * 0.8, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                    p.trail.forEach((t, i) => {
-                        ctx.globalAlpha = p.alpha * (1 - i / p.trail.length) * 0.5;
-                        ctx.beginPath();
-                        ctx.arc(t.x, t.y, p.radius * 0.5, 0, Math.PI * 2);
-                        ctx.fill();
-                    });
-                } else if (p.type === "wex") {
-                    ctx.fillStyle = p.color;
-                    const angle = Math.random() * Math.PI * 2;
-                    ctx.beginPath();
-                    ctx.moveTo(p.x + p.radius * Math.cos(angle), p.y + p.radius * Math.sin(angle));
-                    ctx.lineTo(
-                        p.x + p.radius * Math.cos(angle + (2 * Math.PI) / 3),
-                        p.y + p.radius * Math.sin(angle + (2 * Math.PI) / 3)
-                    );
-                    ctx.lineTo(
-                        p.x + p.radius * Math.cos(angle + (4 * Math.PI) / 3),
-                        p.y + p.radius * Math.sin(angle + (4 * Math.PI) / 3)
-                    );
-                    ctx.closePath();
-                    ctx.fill();
-                    p.trail.forEach((t, i) => {
-                        ctx.globalAlpha = p.alpha * (1 - i / p.trail.length) * 0.3;
-                        ctx.beginPath();
-                        ctx.arc(t.x, t.y, p.radius * 0.3, 0, Math.PI * 2);
-                        ctx.fill();
-                    });
-                } else if (p.type === "exort") {
-                    const gradient = ctx.createLinearGradient(p.x, p.y - p.radius, p.x, p.y + p.radius);
-                    gradient.addColorStop(0, `rgba(255, 166, 61, ${p.alpha})`);
-                    gradient.addColorStop(1, `rgba(255, 255, 255, ${p.alpha * 0.8})`);
-                    ctx.fillStyle = gradient;
-                    ctx.beginPath();
-                    ctx.ellipse(p.x, p.y, p.radius * 0.6, p.radius, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                    p.trail.forEach((t, i) => {
-                        ctx.globalAlpha = p.alpha * (1 - i / p.trail.length) * 0.4;
-                        ctx.beginPath();
-                        ctx.arc(t.x, t.y, p.radius * 0.4, 0, Math.PI * 2);
-                        ctx.fill();
-                    });
-                }
-                ctx.shadowBlur = 0;
-                ctx.globalAlpha = 1;
-                ctx.restore();
-            }
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => {
-                    p.x += p.speedX;
-                    p.y += p.speedY;
-                    if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-                    if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-                    if (p.type === "quas") {
-                        p.alpha = 0.7 + Math.sin(p.pulse) * 0.2;
-                        p.pulse += 0.05;
-                    } else if (p.type === "wex") {
-                        p.alpha = 0.7 + Math.random() * 0.3;
-                    }
-                    p.trail.push({ x: p.x, y: p.y });
-                    if (p.trail.length > 5) p.trail.shift();
-                    drawParticle(p);
-                });
-                requestAnimationFrame(animate);
-            }
-            animate();
-            window.addEventListener("resize", () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            });
-        </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="scripts.js"></script>
     </body>
 </html>
