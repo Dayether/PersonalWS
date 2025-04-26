@@ -407,8 +407,11 @@ section.force-visible {
     overflow: visible;
     width: 100%;
 }
-.section-content p {
-    text-align: center;
+.section-content p,
+.section-content .hero-subtitle,
+.section-content .card-text,
+.section-content .skill-box-text {
+    text-align: justify; /* Justify text alignment */
 }
 /* About Me Section */
 #about-me .section-content {
@@ -487,7 +490,7 @@ section.force-visible {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 #contacts .contact-text {
-    color: #ffffff;
+    text-align: center;
 }
 /* Alert */
 .alert {
@@ -543,22 +546,32 @@ section.force-visible {
 .card-grid:hover > .card:not(:hover) .card-background {
     filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
 }
-.card-body, .skill-box-body {
+/* Ensure card text is fully visible on hover */
+.card {
+    position: relative;
+    overflow: hidden; /* Prevent content from overflowing */
+}
+
+.card-body {
     position: absolute;
     bottom: 0;
     width: 100%;
     background: rgba(26, 43, 60, 0.85);
     z-index: 2;
-    padding: 10px;
+    padding: 15px; /* Add padding for better spacing */
     backdrop-filter: blur(3px);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
     text-align: center;
+    max-height: 100%; /* Ensure the text doesn't overflow */
+    overflow-y: auto; /* Add scroll if the text exceeds the height */
 }
-.card:hover .card-body, .skill-box:hover .skill-box-body {
+
+.card:hover .card-body {
     opacity: 1;
     visibility: visible;
+    transform: translateY(0); /* Ensure smooth transition */
 }
 /* Education Card */
 #education .card {
@@ -1058,4 +1071,57 @@ section {
     padding: 10px;
     line-height: 1.5;
     resize: none;
+}
+/* Adjust navbar spacing for smaller screens */
+.navbar-nav .nav-link {
+    margin: 5px 0; /* Add vertical spacing between links */
+    text-align: center; /* Center-align text in collapsed mode */
+}
+
+/* Ensure icons and text are aligned properly */
+.nav-link i {
+    margin-right: 8px; /* Add spacing between the icon and text */
+    font-size: 1.2rem; /* Adjust icon size */
+    vertical-align: middle; /* Align icon with text */
+}
+
+/* Justify text in the Deysquared section */
+#dayether .hero-subtitle {
+    text-align: justify;
+}
+
+/* Center the About Me header */
+#about-me .section-title {
+    text-align: center;
+}
+
+/* Move card text slightly to the left in the Education section */
+#education .card-body {
+    position: absolute; /* Position the card body at the bottom */
+    bottom: 0; /* Align it to the bottom of the card */
+    width: 100%; /* Ensure it spans the full width of the card */
+    background: rgba(26, 43, 60, 0.85); /* Add a background for better visibility */
+    padding: 15px 20px; /* Add padding for spacing (20px on the left) */
+    text-align: left; /* Align text to the left */
+    z-index: 2; /* Ensure it appears above other elements */
+    box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: flex-start; /* Align content to the left */
+}
+#education .card-text {
+    font-size: 0.9rem; /* Reduce font size */
+    line-height: 1.4; /* Adjust line height for better readability */
+    margin-top: 5px; /* Reduce spacing between title and text */
+    text-align: left; /* Align text to the left */
+    word-wrap: break-word; /* Ensure long words break properly */
+}
+
+/* Style the Rickroll modal footer */
+.modal-footer p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cyan);
+    text-align: center;
 }
