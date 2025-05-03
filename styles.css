@@ -101,7 +101,7 @@ body {
     z-index: 1000;
     transition: transform 0.5s ease, background-color 0.3s ease;
 }
-
+ 
 .navbar-brand {
     font-family: 'Cinzel', serif;
     font-size: 3rem; /* Slightly bigger */
@@ -112,12 +112,12 @@ body {
     margin-right: 15px;
     transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
-
+ 
 .navbar-brand:hover {
     transform: scale(1.1); /* Zoom in */
     text-shadow: 0 0 15px rgba(76, 201, 240, 1); /* Strong glow */
 }
-
+ 
 .nav-link {
     font-size: 1.6rem; /* Slightly bigger */
     font-weight: 700; /* Bolder */
@@ -126,13 +126,13 @@ body {
     position: relative;
     transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
-
+ 
 .nav-link:hover {
     transform: scale(1.1); /* Zoom in */
     text-shadow: 0 0 15px rgba(76, 201, 240, 1); /* Strong glow */
     color: var(--cyan); /* Match footer text color */
 }
-
+ 
 .nav-link::after {
     content: '';
     position: absolute;
@@ -143,7 +143,7 @@ body {
     background-color: var(--cyan);
     transition: width 0.3s;
 }
-
+ 
 .nav-link:hover::after {
     width: 100%; /* Underline effect */
 }
@@ -165,7 +165,7 @@ body {
     margin-right: 15px;
     transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
-
+ 
 .nav-link {
     font-size: 1.6rem; /* Slightly bigger */
     font-weight: 700; /* Bolder */
@@ -174,13 +174,13 @@ body {
     position: relative;
     transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
-
+ 
 .nav-link:hover {
     transform: scale(1.1); /* Zoom in */
     text-shadow: 0 0 15px rgba(76, 201, 240, 1); /* Strong glow */
     color: var(--cyan); /* Match footer text color */
 }
-
+ 
 .nav-link::after {
     content: '';
     position: absolute;
@@ -191,7 +191,7 @@ body {
     background-color: var(--cyan);
     transition: width 0.3s;
 }
-
+ 
 .nav-link:hover::after {
     width: 100%; /* Underline effect */
 }
@@ -551,7 +551,7 @@ section.force-visible {
     position: relative;
     overflow: hidden; /* Prevent content from overflowing */
 }
-
+ 
 .card-body {
     position: absolute;
     bottom: 0;
@@ -567,7 +567,7 @@ section.force-visible {
     max-height: 100%; /* Ensure the text doesn't overflow */
     overflow-y: auto; /* Add scroll if the text exceeds the height */
 }
-
+ 
 .card:hover .card-body {
     opacity: 1;
     visibility: visible;
@@ -629,19 +629,19 @@ section.force-visible {
     gap: 20px;
     justify-content: center;
 }
-
+ 
 .card-grid > .col-12 {
     flex: 1 1 calc(33.333% - 20px); /* Default: 3 items per row */
     max-width: calc(33.333% - 20px);
 }
-
+ 
 @media (max-width: 991px) {
     .card-grid > .col-12 {
         flex: 1 1 calc(50% - 20px); /* Medium screens: 2 items per row */
         max-width: calc(50% - 20px);
     }
 }
-
+ 
 @media (max-width: 576px) {
     .card-grid > .col-12 {
         flex: 1 1 100%; /* Force one item per row */
@@ -845,7 +845,7 @@ section {
     opacity: 1;
     transform: translateY(0);
 }
-
+ 
 /* Projects Section */
 .project-box {
     background: var(--neumorphic-bg);
@@ -875,7 +875,7 @@ section {
     padding: 20px;
     user-select: none;
 }
-
+ 
 /* Projects Section Hover Animation */
 .project-box {
     position: relative;
@@ -885,12 +885,12 @@ section {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
-
+ 
 .project-box:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
-
+ 
 .project-image-wrapper {
     position: relative;
     width: 100%;
@@ -899,7 +899,7 @@ section {
     overflow: hidden;
     border-radius: 12px;
 }
-
+ 
 .project-image {
     position: absolute;
     top: 0;
@@ -909,11 +909,11 @@ section {
     object-fit: cover;
     transition: transform 0.3s ease;
 }
-
+ 
 .project-box:hover .project-image {
     transform: scale(1.1); /* Slight zoom effect on hover */
 }
-
+ 
 .project-overlay {
     position: absolute;
     top: 0;
@@ -928,11 +928,11 @@ section {
     transition: opacity 0.3s ease;
     border-radius: 12px;
 }
-
+ 
 .project-box:hover .project-overlay {
     opacity: 1;
 }
-
+ 
 .project-text {
     color: #fff;
     font-size: 1.2rem;
@@ -943,48 +943,48 @@ section {
     transition: transform 0.3s ease, opacity 0.3s ease;
     opacity: 0;
 }
-
+ 
 .project-box:hover .project-text {
     transform: translateY(0);
     opacity: 1;
 }
-
+ 
 /* Make Achievements and Projects Flexboxes Bigger */
 #achievements .card, #projects .card {
     min-height: 400px; /* Increase card height */
     font-size: 1.2rem; /* Increase text size */
 }
-
+ 
 #achievements .card-title, #projects .card-title {
     font-size: 1.8rem; /* Increase title size */
     font-weight: bold;
 }
-
+ 
 #achievements .card-text, #projects .card-text {
     font-size: 1.1rem; /* Increase description size */
     line-height: 1.6;
 }
-
+ 
 /* Highlight and Blur Effect for Cards */
 .card-grid {
     position: relative;
 }
-
+ 
 .card {
     transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
 }
-
+ 
 .card:hover {
     transform: scale(1.05); /* Highlight the hovered card */
     z-index: 10;
 }
-
+ 
 .card-grid:hover > .card:not(:hover) {
     filter: blur(5px); /* Blur other cards */
     opacity: 0.5; /* Dim other cards */
     transform: scale(0.95); /* Slightly shrink other cards */
 }
-
+ 
 /* Subtle Glowing Transition Effect */
 .glow-overlay {
     position: fixed;
@@ -997,7 +997,7 @@ section {
     pointer-events: none;
     animation: glowExpand 0.6s ease-out forwards;
 }
-
+ 
 @keyframes glowExpand {
     0% {
         opacity: 0.8;
@@ -1008,11 +1008,11 @@ section {
         transform: scale(1);
     }
 }
-
+ 
 .glow-overlay.fade-out {
     animation: glowFadeOut 0.6s ease-out forwards;
 }
-
+ 
 @keyframes glowFadeOut {
     0% {
         opacity: 0.4;
@@ -1021,13 +1021,13 @@ section {
         opacity: 0;
     }
 }
-
+ 
 /* Floating Label Styles */
 .floating-label {
     position: relative;
     margin-bottom: 20px;
 }
-
+ 
 .floating-label .form-control {
     padding: 10px 10px 10px 10px;
     border: 2px solid var(--orange);
@@ -1038,13 +1038,13 @@ section {
     color: #ffffff;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
+ 
 .floating-label .form-control:focus {
     border-color: var(--cyan);
     box-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
     outline: none;
 }
-
+ 
 .floating-label .label-text {
     position: absolute;
     top: 50%;
@@ -1056,7 +1056,7 @@ section {
     transition: all 0.3s ease;
     pointer-events: none;
 }
-
+ 
 .floating-label .form-control:focus + .label-text,
 .floating-label .form-control:not(:placeholder-shown) + .label-text {
     top: -10px;
@@ -1064,7 +1064,7 @@ section {
     color: var(--cyan);
     opacity: 1;
 }
-
+ 
 /* Align Message Text to Upper-Left */
 .floating-label textarea.form-control {
     text-align: left;
@@ -1077,24 +1077,24 @@ section {
     margin: 5px 0; /* Add vertical spacing between links */
     text-align: center; /* Center-align text in collapsed mode */
 }
-
+ 
 /* Ensure icons and text are aligned properly */
 .nav-link i {
     margin-right: 8px; /* Add spacing between the icon and text */
     font-size: 1.2rem; /* Adjust icon size */
     vertical-align: middle; /* Align icon with text */
 }
-
+ 
 /* Justify text in the Deysquared section */
 #dayether .hero-subtitle {
     text-align: justify;
 }
-
+ 
 /* Center the About Me header */
 #about-me .section-title {
     text-align: center;
 }
-
+ 
 /* Move card text slightly to the left in the Education section */
 #education .card-body {
     position: absolute; /* Position the card body at the bottom */
@@ -1117,7 +1117,7 @@ section {
     text-align: left; /* Align text to the left */
     word-wrap: break-word; /* Ensure long words break properly */
 }
-
+ 
 /* Style the Rickroll modal footer */
 .modal-footer p {
     font-size: 1rem;

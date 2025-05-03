@@ -36,10 +36,10 @@ window.addEventListener('scroll', handleScroll);
 document.querySelectorAll('.nav-link').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-
+ 
         const targetId = this.getAttribute('href').substring(1);
         const targetSection = document.getElementById(targetId);
-
+ 
         // Get all sections and calculate the current and target indices
         const sections = Array.from(document.querySelectorAll('section'));
         const currentSectionIndex = sections.findIndex(section => {
@@ -47,26 +47,26 @@ document.querySelectorAll('.nav-link').forEach(anchor => {
             return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
         });
         const targetSectionIndex = sections.findIndex(section => section.id === targetId);
-
+ 
         // If the target section is already in view, do nothing
         if (currentSectionIndex === targetSectionIndex) return;
-
+ 
         // Determine the scroll direction
         const scrollDirection = targetSectionIndex > currentSectionIndex ? 1 : -1;
-
+ 
         // Scroll through each section one by one
         let currentIndex = currentSectionIndex;
         const scrollStep = () => {
             if (currentIndex === targetSectionIndex) return; // Stop when the target section is reached
-
+ 
             currentIndex += scrollDirection;
             const nextSection = sections[currentIndex];
             nextSection.scrollIntoView({ behavior: 'smooth' });
-
+ 
             // Continue scrolling after a delay
             requestAnimationFrame(scrollStep); // Use requestAnimationFrame for smoother scrolling
         };
-
+ 
         scrollStep(); // Start scrolling immediately
     });
 });
@@ -83,10 +83,10 @@ function toggleCardText(card) {
 function validateForm() {
     const form = document.getElementById('contact-form');
     const feedback = document.getElementById('form-feedback');
-
+ 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-
+ 
         // Show SweetAlert confirmation
         Swal.fire({
             title: 'Are you sure?',
@@ -118,14 +118,14 @@ function validateForm() {
         });
     });
 }
-
+ 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.card, .skill-box').forEach(card => {
         card.addEventListener('touchstart', () => toggleCardText(card));
     });
     validateForm();
 });
-
+ 
 // Particle Animation
 const canvas = document.getElementById("invoker-canvas");
 const ctx = canvas.getContext("2d");
@@ -236,7 +236,7 @@ window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
-
+ 
 // Animation for Projects Section Boxes
 function animateProjects() {
     const projectBoxes = document.querySelectorAll('.project-box');
@@ -254,22 +254,22 @@ function animateProjects() {
         }
     });
 }
-
+ 
 document.addEventListener('DOMContentLoaded', () => {
     animateProjects();
 });
-
+ 
 window.addEventListener('scroll', () => {
     animateProjects();
 });
-
+ 
 // Enhanced Entrance Animations for All Sections
 function animateSectionsOnScroll() {
     const sections = document.querySelectorAll('section');
     sections.forEach(section => {
         const rect = section.getBoundingClientRect();
         const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-
+ 
         if (rect.top <= windowHeight - 100 && !section.classList.contains('visible')) {
             section.classList.add('visible');
             if (section.dataset.animation) {
@@ -281,6 +281,6 @@ function animateSectionsOnScroll() {
         }
     });
 }
-
+ 
 document.addEventListener('DOMContentLoaded', animateSectionsOnScroll);
 window.addEventListener('scroll', animateSectionsOnScroll);
